@@ -7,9 +7,8 @@ app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}))
 app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
 require('dotenv').config()
-const userRouter= require('./routes/user.route')
-app.use('/user',userRouter)
-app.set('view engine',"ejs")    
+const patientRouter= require('./routes/patient.route')
+app.use('/patient',patientRouter)
 let PORT= process.env.PORT||4000
 const URL='mongodb+srv://JayFab200:o8o88379502@cluster0.qtfme.mongodb.net/final_project?retryWrites=true&w=majority';
 
@@ -29,6 +28,9 @@ app.get('/',(req,res)=>{
 res.send('HELLO WORLD, Backend is running')
 })
 
+// app.get('/patient',(req,res)=>{
+//     res.send('HELLO WORLD, Backend is running')
+//     })
 
 
 mongoose.connect(URL,(err)=>{
