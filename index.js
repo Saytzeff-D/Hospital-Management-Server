@@ -10,7 +10,7 @@ require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
 app.use('/patient',patientRouter)
 let PORT= process.env.PORT||4000
-const URL='mongodb+srv://JayFab200:o8o88379502@cluster0.qtfme.mongodb.net/final_project?retryWrites=true&w=majority';
+const URL=process.env.URI;
 
 const cloudinary = require('cloudinary')
 
