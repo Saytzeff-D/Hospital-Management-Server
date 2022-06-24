@@ -26,7 +26,7 @@ form.save( (err)=>{
     }
     else{
 
-        sendEmail({recipientMail:patientDetails.email, responseKey:response})
+        sendEmail({recipientMail:patientDetails.email, recipientName:patientDetails.fullName, responseKey:response})
         // response.send({status:true, message:'operation succesful'})
 
     }
@@ -55,8 +55,8 @@ let transporter = nodemailer.createTransport({
       let mailOptions = {
         from:process.env.USER,
         to: recepientDetails.recipientMail,
-        subject: 'MY BOSS Hospital Login Details',
-        html: `Thank you for signing up,login into your account with the  following credentials
+        subject: 'Hospital Management Software',
+        html: `Dear ${recepientDetails.recipientName}, Welcome to the Hospital Management Software. The following are your credentials to login to your successfully registered account.
          <br>   
          <b>
          Email: ${recepientDetails.recipientMail}
