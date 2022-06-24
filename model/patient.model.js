@@ -3,30 +3,30 @@ const mongoose=require('mongoose')
 
 let patientSchema= mongoose.Schema({
    fullName:{type:String,require:true},
-   guardian:{type:String,require:true},
-   bloodGroup:{type:String,require:true},
+   guardianName:{type:String,require:false},
+   bloodGroup:{type:String,require:false},
    email:{type:String,require:true},
    phone:{type:String,require:true},
    disability:{type:String,require:true},
-   sex:{type:String,require:true},
+   gender:{type:String,require:true},
    address:{type:String,require:true},
    dob:{type:String,require:true},
    name:{type:String,require:true},
    maritalStatus:{type:String,require:true},
-   photo:{type:String,require:true}
+   photo:{type:String,require:true},
+   patientID:''
 })
 
 
 patientSchema.pre('save', function(next){
 
-   const file =this.filename
-   cloudinary.v2.uploader.upload(file,{public_id:this.foodName},(err,result)=>{
+   const file =this.photo
+   cloudinary.v2.uploader.upload(file,{public_id:this.fullName},(err,result)=>{
        if(err){
            console.log(err)
-           // result.send({message:'upload failed', status:false}
        }else{
 
-        let publicName=this.foodName
+        let publicName=this.fullName
         let imageUrl=result.secure_url
         let splitting=imageUrl.split('upload')
         console.log(splitting)
@@ -35,7 +35,7 @@ patientSchema.pre('save', function(next){
         let newImagepath=`${path}/${'w_400,h_280,c_scale'}/${publicName}`
         console.log(newImagepath)
 
-           this.filename=newImagepath
+           this.photo=newImagepath
            next()
        }
    }); 
@@ -43,5 +43,7 @@ patientSchema.pre('save', function(next){
   })
 
 
-let patientModel=mongoose.model('patients', patientSchema)
-module.exports=patientModel
+
+
+let patientModel=mongoose.model('patient', patientSchema)
+    module.exports=  patientModel

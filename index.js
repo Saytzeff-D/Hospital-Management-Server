@@ -3,6 +3,7 @@ const app= express();
 const cors=require('cors')
 const mongoose=require('mongoose')
 const bodyParser=require('body-parser')
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}))
 app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
@@ -15,6 +16,7 @@ const URL=process.env.URI;
 const cloudinary = require('cloudinary')
 
 
+
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.API_KEY, 
@@ -25,7 +27,7 @@ cloudinary.config({
 
 
 app.get('/',(req,res)=>{
-res.send('HELLO WORLD, Backend is running')
+res.send('hello world backend is working')
 })
 
 // app.get('/patient',(req,res)=>{
