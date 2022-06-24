@@ -11,7 +11,7 @@ require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
 app.use('/patient',patientRouter)
 let PORT= process.env.PORT||4000
-const URL=process.env.URI;
+const URI = process.env.URI;
 
 const cloudinary = require('cloudinary')
 
@@ -27,7 +27,7 @@ cloudinary.config({
 
 
 app.get('/',(req,res)=>{
-res.send('hello world backend is working')
+    res.send('Hospital Management Server Initialized')
 })
 
 // app.get('/patient',(req,res)=>{
@@ -35,19 +35,15 @@ res.send('hello world backend is working')
 //     })
 
 
-mongoose.connect(URL,(err)=>{
+mongoose.connect(URI,(err)=>{
 if(err){
-	console.log('Error in Connection')
+	// console.log('Error in Connection to MongoDB')
+    console.log(err)
 }else{
-	console.log('succesful connected to databse')
+	console.log('Connection to Mongoose Database Initialized')
 }
 })
 
-
-
-
-
-
 app.listen(PORT,()=>{
-	console.log('running on port 4000');
+	console.log('Hospital Management Server listening on Port 4000');
 })
