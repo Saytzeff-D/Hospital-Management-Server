@@ -65,5 +65,24 @@ const retrievePatientId = (req, res)=>{
       });
     }
 
+const login = (req, res) => {
+    const details = req.body;
+    patientModel.findOne({email: details.email}, (err, response) => {
+        if(err) {
+            res.status(501).send({status: false, message: "Internal Server Error"});
+        } else {
+            if (!response) {
+                res.send({status: false, message: "Invalid email"});
+            } else {
+                if(response.patientId == details.patientId) {
+                    res.send({status: true, message: "login Successful", response});
+                } else {
+                    res.send({status: false, message: "Incorrect Health ID"});
+                }
+            }
+        }
+    })
+}
 
-module.exports={getLandingPage,registerPatient, retrievePatientId}
+
+module.exports={getLandingPage,registerPatient, retrievePatientId, login}
