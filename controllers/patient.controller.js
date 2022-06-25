@@ -46,7 +46,7 @@ let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user:process.env.USER,
-          pass:process.env.PASS
+          pass:'process.env.PASS'
         },tls: {
             rejectUnauthorized: false
         }
@@ -68,12 +68,16 @@ let transporter = nodemailer.createTransport({
       
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-            console.log(error)
             recepientDetails.responseKey.status(501).send({status:false, message:'internal server errorsss'})
+
+            console.log(error)
         } 
         else {
-updatePatientData({responseKey:recepientDetails.responseKey, email:recepientDetails.recipientMail, healthNumber:generateHealthID})
-console.log(info.response)            
+            recepientDetails.responseKey.send({status:true, message:'internal server errorsss'})
+
+
+// updatePatientData({responseKey:recepientDetails.responseKey, email:recepientDetails.recipientMail, healthNumber:generateHealthID})
+// console.log(info.response)            
         }
       });
     }

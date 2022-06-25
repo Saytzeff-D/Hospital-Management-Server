@@ -1,6 +1,16 @@
 const mongoose=require('mongoose')
 // const bcrypt= require('bcryptjs')
 
+
+const cloudinary = require('cloudinary')
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY, 
+    api_secret: process.env.API_SECRET
+});
+
+
+
 let patientSchema= mongoose.Schema({
    fullName:{type:String,require:true},
    guardianName:{type:String,require:false},
@@ -19,13 +29,14 @@ let patientSchema= mongoose.Schema({
 
 
 patientSchema.pre('save', function(next){
-
+console.log(9999)
    const file =this.photo
    cloudinary.v2.uploader.upload(file,{public_id:this.fullName},(err,result)=>{
        if(err){
-           console.log(err)
+        //    console.log(err)
+           console.log(456789)
        }else{
-
+console.log(9000)
         let publicName=this.fullName
         let imageUrl=result.secure_url
         let splitting=imageUrl.split('upload')
