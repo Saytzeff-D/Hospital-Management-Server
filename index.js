@@ -10,7 +10,7 @@ app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
 app.use('/patient',patientRouter)
-let PORT= process.env.PORT||4000
+let PORT= process.env.PORT
 const URI = process.env.URI;
 
 const cloudinary = require('cloudinary')
