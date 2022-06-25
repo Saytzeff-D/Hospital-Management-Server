@@ -3,19 +3,19 @@ const app= express();
 const cors=require('cors')
 const mongoose=require('mongoose')
 const bodyParser=require('body-parser')
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}))
-app.use(express.json({limit:'50mb'}))
+app.use(bodyParser.json({limit:'50mb'}));
+// app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
+const staffRouter = require('./routes/staff.route');
 app.use('/patient',patientRouter);
 app.use("/staff", staffRouter);
 let PORT= process.env.PORT
 const URI = process.env.URI;
 
 const cloudinary = require('cloudinary');
-const staffRouter = require('./routes/staff.route');
 
 
 

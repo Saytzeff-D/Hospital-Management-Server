@@ -9,7 +9,7 @@ const getLandingPage=(req,res)=>{
 }
 const registerPatient=(req,res)=>{
     const patientDetails= req.body
-    const generatePatientId = `PAT${Math.floor(Math.random()*1000)}`
+    const generatePatientId = `HMS${Math.floor(Math.random()*10000)}`
     patientDetails.patientId = generatePatientId
     patientModel.findOne({email: req.body.email}, (err, result)=>{
         if (err) {
@@ -31,38 +31,52 @@ const registerPatient=(req,res)=>{
         }
     })
 }
-const retrievePatientId = (req, res)=>{  
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user:process.env.ADMIN_EMAIL,
-          pass:process.env.ADMIN_PASSWORD
-        },tls: {
-            rejectUnauthorized: false
+const retrievePatientId = (req, res)=>{
+    const userEmail = req.body.email
+    console.log(req.body)
+    patientModel.findOne(req.body, (err, result)=>{
+        if(err){
+            res.status(300).json({status: false, message: 'Server Error'})
+        }else{
+            console.log(result)
+            if(result){
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    port: 465,
+                    secure: true,
+                    auth: {
+                      user:process.env.ADMIN_EMAIL,
+                      pass:process.env.ADMIN_PASSWORD
+                    }
+                  });
+                  
+                  let mailOptions = {
+                    from: process.env.ADMIN_EMAIL,
+                    to: userEmail,
+                    subject: 'Hospital Management Software: Patient Id Retrieval',
+                    html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
+                     <br>   
+                     <b>
+                     Patient ID: ${result.patientId}       
+                     </b>
+                    `
+                  };
+                  
+                  transporter.sendMail(mailOptions, (error, info)=>{
+                    if (error) {
+                        console.log(error)
+                        res.status(501).send({status:false, message:'Unable to Send Email. Mailer Error'})
+                    } 
+                    else {
+                        console.log(info)   
+                        res.status(200).json({message: 'A message has been sent to your E-Mail Account. Please Check.'})         
+                    }
+                  });
+            }else{
+                res.status(200).json({status: false, message: 'E-Mail does not exist'})
+            }
         }
-      });
-      
-      let mailOptions = {
-        from:process.env.USER,
-        to: req.body.email,
-        subject: 'Hospital Management Software: Patient Id Retrieval',
-        html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
-         <br>   
-         <b>
-         Patient ID: ${generateHealthID}       
-         </b>
-        `
-      };
-      
-      transporter.sendMail(mailOptions, (error, info)=>{
-        if (error) {
-            console.log(error)
-            res.status(501).send({status:false, message:'internal server errorsss'})
-        } 
-        else {
-            console.log(info)            
-        }
-      });
+    })
     }
 
 const login = (req, res) => {
@@ -74,7 +88,7 @@ const login = (req, res) => {
             if (!response) {
                 res.send({status: false, message: "Invalid email"});
             } else {
-                if(response.patientId == details.patientId) {
+                if(response.healthId == details.healthId) {
                     res.send({status: true, message: "login Successful", response});
                 } else {
                     res.send({status: false, message: "Incorrect Health ID"});
