@@ -35,8 +35,8 @@ const retrievePatientId = (req, res)=>{
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user:process.env.USER,
-          pass:process.env.PASS
+          user:process.env.ADMIN_EMAIL,
+          pass:process.env.ADMIN_PASSWORD
         },tls: {
             rejectUnauthorized: false
         }
