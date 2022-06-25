@@ -9,11 +9,13 @@ app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
-app.use('/patient',patientRouter)
+app.use('/patient',patientRouter);
+app.use("/staff", staffRouter);
 let PORT= process.env.PORT
 const URI = process.env.URI;
 
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
+const staffRouter = require('./routes/staff.route');
 
 
 
