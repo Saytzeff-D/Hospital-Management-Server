@@ -3,7 +3,7 @@ const patientRouter=express.Router()
 const patientController= require('../controllers/patient.controller')
 patientRouter.get('/',patientController.getLandingPage)
 
-patientRouter.post('/register',patientController.postSignUp)
+patientRouter.post('/register',patientController.registerPatient)
 
 
 

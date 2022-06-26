@@ -1,52 +1,47 @@
-// const userModel = require("../model/user.model")
 // const bcrypt= require('bcryptjs')
-// const res = require("express/lib/response")
 // const jwt=require('jsonwebtoken')
-// const secret=process.env.JWT_SECRET
 
 const patientModel = require("../model/patient.model")
 const nodemailer=require('nodemailer')
-let patientFormBody={}
+
 const getLandingPage=(req,res)=>{
-res.send('hello patient')
+    res.send('Hello Patient')
 }
-
-
-const postSignUp=(request,response)=>{
-
-let patientDetails= request.body
-// response.send(patientDetails)
-patientFormBody=patientDetails
-let form=new patientModel(patientDetails)
-
-form.save( (err)=>{
-
-    if(err){
-        response.status(501).send({status:false, message:'internal server errorss'})
-    }
-    else{
-
-        sendEmail({recipientMail:patientDetails.email, responseKey:response})
-        // response.send({status:true, message:'operation succesful'})
-
-    }
-})
-
-
+const registerPatient=(req,res)=>{
+    const patientDetails= req.body
+    const generatePatientId = `PAT${Math.floor(Math.random()*1000)}`
+    patientDetails.patientId = generatePatientId
+    patientModel.findOne({email: req.body.email}, (err, result)=>{
+        if (err) {
+            res.status(300).json({message: 'Server Error'})
+        } else {
+            if (result) {
+                res.status(200).json({message: 'E-mail Already exist'})
+            } else {
+                let form = new patientModel(patientDetails)
+                form.save( (err)=>{
+                if(err){
+                    console.log(err)
+                    res.status(301).send({status:false, message:'Internal server error'})
+                }else{
+                    res.status(200).json({message: 'Success', patientId: generatePatientId})
+                }
+                })
+            }
+        }
+    })
 }
-
-
-
-
-
-function sendEmail(recepientDetails){
-let generateHealthID=`PAT${Math.floor(Math.random()*10000)}`
-  
-let transporter = nodemailer.createTransport({
+const retrievePatientId = (req, res)=>{  
+    let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
+<<<<<<< HEAD
           user:process.env.USER,
           pass:'process.env.PASS'
+=======
+          user:process.env.ADMIN_EMAIL,
+          pass:process.env.ADMIN_PASSWORD
+>>>>>>> refs/remotes/origin/main
         },tls: {
             rejectUnauthorized: false
         }
@@ -54,20 +49,19 @@ let transporter = nodemailer.createTransport({
       
       let mailOptions = {
         from:process.env.USER,
-        to: recepientDetails.recipientMail,
-        subject: 'MY BOSS Hospital Login Details',
-        html: `Thank you for signing up,login into your account with the  following credentials
+        to: req.body.email,
+        subject: 'Hospital Management Software: Patient Id Retrieval',
+        html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
          <br>   
          <b>
-         Email: ${recepientDetails.recipientMail}
-         <br>
-         HealthID: ${generateHealthID}       
+         Patient ID: ${generateHealthID}       
          </b>
         `
       };
       
-      transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, (error, info)=>{
         if (error) {
+<<<<<<< HEAD
             recepientDetails.responseKey.status(501).send({status:false, message:'internal server errorsss'})
 
             console.log(error)
@@ -78,24 +72,16 @@ let transporter = nodemailer.createTransport({
 
 // updatePatientData({responseKey:recepientDetails.responseKey, email:recepientDetails.recipientMail, healthNumber:generateHealthID})
 // console.log(info.response)            
+=======
+            console.log(error)
+            res.status(501).send({status:false, message:'internal server errorsss'})
+        } 
+        else {
+            console.log(info)            
+>>>>>>> refs/remotes/origin/main
         }
       });
     }
 
 
-function updatePatientData(updateDetails){
-patientFormBody.patientID=updateDetails.healthNumber
-
-    patientModel.findOneAndUpdate({email:updateDetails.email}, patientFormBody ,(err)=>{
-if(err){
-    updateDetails.responseKey.send({status:false, message:'internal server errorssssss'})
-}
-else{
-    updateDetails.responseKey.send({status:true, message:'operation succesful',patientID:updateDetails.healthNumber})
-
-}
- })
-
-}
-
-module.exports={getLandingPage,postSignUp}
+module.exports={getLandingPage,registerPatient, retrievePatientId}

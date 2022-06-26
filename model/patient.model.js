@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const cloudinary = require('cloudinary')
 // const bcrypt= require('bcryptjs')
 
 
@@ -21,7 +22,6 @@ let patientSchema= mongoose.Schema({
    gender:{type:String,require:true},
    address:{type:String,require:true},
    dob:{type:String,require:true},
-   name:{type:String,require:true},
    maritalStatus:{type:String,require:true},
    photo:{type:String,require:true},
    patientID:''
