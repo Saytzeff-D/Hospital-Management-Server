@@ -39,8 +39,7 @@ app.get('/',(req,res)=>{
 
 mongoose.connect(URI,(err)=>{
 if(err){
-	// console.log('Error in Connection to MongoDB')
-    console.log(err)
+	console.log('Error in Connection to MongoDB')
 }else{
 	console.log('Connection to Mongoose Database Initialized')
 }

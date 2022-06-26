@@ -9,8 +9,8 @@ const getLandingPage=(req,res)=>{
 }
 const registerPatient=(req,res)=>{
     const patientDetails= req.body
-    const generatePatientId = `HMS${Math.floor(Math.random()*10000)}`
-    patientDetails.patientId = generatePatientId
+    const generateHealthId = `PAT${Math.floor(Math.random()*10000)}`
+    patientDetails.healthId = generateHealthId
     patientModel.findOne({email: req.body.email}, (err, result)=>{
         if (err) {
             res.status(300).json({message: 'Server Error'})
@@ -24,7 +24,7 @@ const registerPatient=(req,res)=>{
                     console.log(err)
                     res.status(301).send({status:false, message:'Internal server error'})
                 }else{
-                    res.status(200).json({message: 'Success', patientId: generatePatientId})
+                    res.status(200).json({message: 'Success', healthId: generateHealthId})
                 }
                 })
             }
@@ -57,7 +57,7 @@ const retrievePatientId = (req, res)=>{
                     html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
                      <br>   
                      <b>
-                     Patient ID: ${result.patientId}       
+                     Patient ID: ${result.healthId}       
                      </b>
                     `
                   };
