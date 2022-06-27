@@ -31,6 +31,58 @@ const registerPatient=(req,res)=>{
         }
     })
 }
+<<<<<<< HEAD
+const retrievePatientId = (req, res)=>{  
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+<<<<<<< HEAD
+          user:process.env.USER,
+          pass:'process.env.PASS'
+=======
+          user:process.env.ADMIN_EMAIL,
+          pass:process.env.ADMIN_PASSWORD
+>>>>>>> refs/remotes/origin/main
+        },tls: {
+            rejectUnauthorized: false
+        }
+      });
+      
+      let mailOptions = {
+        from:process.env.USER,
+        to: req.body.email,
+        subject: 'Hospital Management Software: Patient Id Retrieval',
+        html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
+         <br>   
+         <b>
+         Patient ID: ${generateHealthID}       
+         </b>
+        `
+      };
+      
+      transporter.sendMail(mailOptions, (error, info)=>{
+        if (error) {
+<<<<<<< HEAD
+            recepientDetails.responseKey.status(501).send({status:false, message:'internal server errorsss'})
+
+            console.log(error)
+        } 
+        else {
+            recepientDetails.responseKey.send({status:true, message:'internal server errorsss'})
+
+
+// updatePatientData({responseKey:recepientDetails.responseKey, email:recepientDetails.recipientMail, healthNumber:generateHealthID})
+// console.log(info.response)            
+=======
+            console.log(error)
+            res.status(501).send({status:false, message:'internal server errorsss'})
+        } 
+        else {
+            console.log(info)            
+>>>>>>> refs/remotes/origin/main
+        }
+      });
+=======
 const retrievePatientId = (req, res)=>{
     const userEmail = req.body.email
     console.log(req.body)
@@ -77,6 +129,7 @@ const retrievePatientId = (req, res)=>{
             }
         }
     })
+>>>>>>> refs/remotes/origin/main
     }
 
 const login = (req, res) => {
