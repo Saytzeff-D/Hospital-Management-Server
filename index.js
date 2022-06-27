@@ -32,10 +32,6 @@ app.get('/',(req,res)=>{
     res.send('Hospital Management Server Initialized')
 })
 
-// app.get('/patient',(req,res)=>{
-//     res.send('HELLO WORLD, Backend is running')
-//     })
-
 
 mongoose.connect(URI,(err)=>{
 if(err){
