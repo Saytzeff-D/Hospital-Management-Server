@@ -3,17 +3,19 @@ const app= express();
 const cors=require('cors')
 const mongoose=require('mongoose')
 const bodyParser=require('body-parser')
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}))
-app.use(express.json({limit:'50mb'}))
+app.use(bodyParser.json({limit:'50mb'}));
+// app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter= require('./routes/patient.route')
-app.use('/patient',patientRouter)
+const staffRouter = require('./routes/staff.route');
+app.use('/patient',patientRouter);
+app.use("/staff", staffRouter);
 let PORT= process.env.PORT
 const URI = process.env.URI;
 
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
 
 
 
@@ -37,8 +39,7 @@ app.get('/',(req,res)=>{
 
 mongoose.connect(URI,(err)=>{
 if(err){
-	// console.log('Error in Connection to MongoDB')
-    console.log(err)
+	console.log('Error in Connection to MongoDB')
 }else{
 	console.log('Connection to Mongoose Database Initialized')
 }

@@ -24,7 +24,7 @@ let patientSchema= mongoose.Schema({
    dob:{type:String,require:true},
    maritalStatus:{type:String,require:true},
    photo:{type:String,require:true},
-   patientID:''
+   healthId: String
 })
 
 
