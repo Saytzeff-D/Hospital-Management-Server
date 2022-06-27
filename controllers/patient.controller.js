@@ -57,7 +57,7 @@ const retrievePatientId = (req, res)=>{
                     html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
                      <br>   
                      <b>
-                     Patient ID: ${result.healthId}       
+                     Health ID: ${result.healthId}       
                      </b>
                     `
                   };
