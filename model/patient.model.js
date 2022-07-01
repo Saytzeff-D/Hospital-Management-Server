@@ -3,7 +3,7 @@ const cloudinary = require('cloudinary')
 // const bcrypt= require('bcryptjs')
 
 
-const cloudinary = require('cloudinary')
+// const cloudinary = require('cloudinary')
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.API_KEY, 
@@ -23,6 +23,7 @@ let patientSchema= mongoose.Schema({
    address:{type:String,require:true},
    dob:{type:String,require:true},
    maritalStatus:{type:String,require:true},
+   created:String,
    photo:{type:String,require:true},
    healthId: String
 })
@@ -32,21 +33,17 @@ patientSchema.pre('save', function(next){
 console.log(9999)
    const file =this.photo
    cloudinary.v2.uploader.upload(file,{public_id:this.fullName},(err,result)=>{
-       if(err){
-        //    console.log(err)
-           console.log(456789)
-       }else{
+    if(err){
+ console.log('failed to upload')
+}
+else{
 console.log(9000)
         let publicName=this.fullName
         let imageUrl=result.secure_url
-        let splitting=imageUrl.split('upload')
-        console.log(splitting)
-        
+        let splitting=imageUrl.split('upload')        
         let path=splitting[0]+'upload'
-        let newImagepath=`${path}/${'w_400,h_280,c_scale'}/${publicName}`
-        console.log(newImagepath)
-
-           this.photo=newImagepath
+        let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
+        this.photo=newImagepath
            next()
        }
    }); 
