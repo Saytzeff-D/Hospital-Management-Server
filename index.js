@@ -14,7 +14,7 @@ app.use('/patient',patientRouter);
 app.use("/staff", staffRouter);
 let PORT= process.env.PORT
 const URI = process.env.URI;
-
+console.log(URI,process.env.CLOUD_NAME)
 const cloudinary = require('cloudinary');
 
 
