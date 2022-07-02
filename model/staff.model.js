@@ -60,6 +60,6 @@ console.log(err)
 })
 
 
-StaffModel = mongoose.model("staff_tbs", staffSchema);
+StaffModel = mongoose.model("staff", staffSchema);
 
 module.exports = StaffModel;
