@@ -18,15 +18,15 @@ const staffSchema = mongoose.Schema({
 
 })
 
-staffSchema.pre('save', (next)=>{
-  bcrypt.hash(this.password,saltround, (err,hashedPassword)=>{
-    if(err){
-        console.log(err)
-        console.log('cant hash password')
-    }else{
-        this.password=hashedPassword
-    }    
-    })
+// staffSchema.pre('save', (next)=>{
+//   bcrypt.hash(this.password,saltround, (err,hashedPassword)=>{
+//     if(err){
+//         console.log(err)
+//         console.log('cant hash password')
+//     }else{
+//         this.password=hashedPassword
+//     }    
+//     })
 // let file=this.photo
 // cloudinary.v2.upload(file, {public_id:this.fullName}, (err,result)=>{
 //   if(err){
@@ -44,7 +44,7 @@ staffSchema.pre('save', (next)=>{
 //     next()
 //   }
 // })
-})
+// })
 
 let StaffModel = mongoose.model("staff", staffSchema);
 module.exports = StaffModel;
