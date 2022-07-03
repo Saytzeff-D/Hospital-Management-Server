@@ -27,23 +27,23 @@ staffSchema.pre('save', (next)=>{
         this.password=hashedPassword
     }    
     })
-let file=this.photo
-cloudinary.v2.upload(file, {public_id:this.fullName}, (err,result)=>{
-  if(err){
-console.log('failed to upload')
-console.log(err)
-  }
-  else{
-    let publicName=this.fullName
-    let imageUrl=result.secure_url
-    let splitting=imageUrl.split('upload')
-    let path=splitting[0]+'upload'
-    let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
-    console.log(newImagepath)
-    this.photo=newImagepath
-    next()
-  }
-})
+// let file=this.photo
+// cloudinary.v2.upload(file, {public_id:this.fullName}, (err,result)=>{
+//   if(err){
+// console.log('failed to upload')
+// console.log(err)
+//   }
+//   else{
+//     let publicName=this.fullName
+//     let imageUrl=result.secure_url
+//     let splitting=imageUrl.split('upload')
+//     let path=splitting[0]+'upload'
+//     let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
+//     console.log(newImagepath)
+//     this.photo=newImagepath
+//     next()
+//   }
+// })
 })
 
 let StaffModel = mongoose.model("staff", staffSchema);
