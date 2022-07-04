@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken')
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
+
 // console.log(staffDetails)
 StaffModel.findOne({email:staffDetails.email}, (err,result)=>{
   if(err){

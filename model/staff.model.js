@@ -30,7 +30,6 @@ const staffSchema = mongoose.Schema({
 
 })
 
-
 staffSchema.pre('save',  function(next){
 
 
