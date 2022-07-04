@@ -7,6 +7,7 @@ patientRouter.get('/',patientController.getLandingPage);
 patientRouter.post('/register',patientController.registerPatient);
 patientRouter.post("/login", patientController.login);
 patientRouter.post('/retrievePatientId', patientController.retrievePatientId)
+patientRouter.get("/allpat", patientController.allpat);
 
 
 

@@ -95,5 +95,11 @@ const login = (req, res) => {
     })
 }
 
+const allpat=(request,response)=>{
+  patientModel.find( (err,pat)=>{
+    response.send(pat)
+})
+}
 
-module.exports={getLandingPage,registerPatient, retrievePatientId, login}
+
+module.exports={getLandingPage,registerPatient, retrievePatientId, login,allpat}
