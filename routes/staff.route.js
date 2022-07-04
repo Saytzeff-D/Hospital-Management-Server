@@ -7,12 +7,14 @@ staffRouter.post('/register',staffController.registerStaff);
 //     req.body.class=90
 //     res.send(req.body)
 // });
-
+//  Joy
 
 staffRouter.post("/login", staffController.login);
 
 
 staffRouter.get("/allstaffs", staffController.allstaffs);
+staffRouter.get("/dashboard", staffController.authenticateStaff);
+
 
 
 module.exports = staffRouter
