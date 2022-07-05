@@ -10,8 +10,10 @@ app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter = require('./routes/patient.route')
 const staffRouter = require('./routes/staff.route');
+const chatRouter = require('./routes/chat.route');
 app.use('/patient',patientRouter);
 app.use("/staff", staffRouter);
+app.use("/chat", chatRouter);
 let PORT= process.env.PORT
 const URI = process.env.URI;
 const cloudinary = require('cloudinary');
@@ -40,6 +42,21 @@ if(err){
 }
 })
 
-app.listen(PORT,()=>{
+const connection = app.listen(PORT,()=>{
 	console.log('Hospital Management Server listening on Port 4000');
 })
+
+// PAT830
+
+const io = require("socket.io")(connection, {cors: {options: "*"}});
+
+io.on("connection", (socket) => {
+  console.log(`${socket.id} is online`);
+  socket.on('get-message', message => {
+    console.log(message);
+    io.emit('new-message', message);
+  })
+  socket.on("disconnect", () => {
+    console.log(`${socket.id} is offline`)
+  })
+});
