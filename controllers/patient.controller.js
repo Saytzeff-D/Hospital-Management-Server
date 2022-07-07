@@ -19,7 +19,7 @@ const registerPatient=(req,res)=>{
                 form.save( (err)=>{
                 if(err){
                     console.log(err)
-                    res.status(301).send({status:false, message:'Internal server error'})
+                    res.status(501).send({status:false, message:'Internal server error'})
                 }else{
                     res.status(200).json({message: 'Success', healthId: generateHealthId})
                 }
@@ -95,11 +95,15 @@ const login = (req, res) => {
     })
 }
 
-const allpat=(request,response)=>{
-  patientModel.find( (err,pat)=>{
-    response.send(pat)
-})
-}
+const allPatients=(request,response)=>{
+    patientModel.find( (err,patients)=>{
+        if(patients){
+            response.send({status:true, patients})
+        }else{
+            response.status(300).send({status: false, message: "Internal Server Errors"});
+        }
+      
+  })
+  }
 
-
-module.exports={getLandingPage,registerPatient, retrievePatientId, login,allpat}
+module.exports={getLandingPage,registerPatient,allPatients, retrievePatientId, login}
