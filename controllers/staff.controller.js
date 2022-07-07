@@ -39,17 +39,14 @@ const login = (req, res) => {
         res.send({status: false, message: "Invalid Email address"});
       }else{
         bcrypt.compare(details.password,response.password, (err,same)=>{
-        console.log(same)
         if(err){
           res.status(501).send({status: false, message: "Internal Server Error"});
           }else{
             if(same){
               const token=jwt.sign({email}, secret, {expiresIn:'60m'})
-              console.log(token)
-              res.send({message:'correct password',details:response, status:true,token})
-              console.log('login')
+              res.send({message:'Correct password',details:response, status:true,token})
               } else{
-                res.send({status:false, message: 'incorrect password'})
+                res.send({status:false, message: 'Incorrect password'})
               }
             }
         })
@@ -58,26 +55,19 @@ const login = (req, res) => {
 }
 
 const authenticateStaff=(request,response)=>{
-  console.log('authenticating')
   let splitJwt= request.headers.authorization.split(' ')
   let token = splitJwt[1]
-  const secret=process.env.JWT_SECRET
-  console.log(token,secret)
-  let staffModel=StaffModel
-console.log('error0')
+  const secret = process.env.JWT_SECRET
   jwt.verify(token,secret, (err,result)=>{
     if(err){
-      console.log('error1')
       response.send({status:false,message:'Internal Server error'})
     }
     else{
-      staffModel.findOne({email:result.email}, (err,staffDetails)=>{
+      StaffModel.findOne({email:result.email}, (err,staffDetails)=>{
         if(err){
-      console.log('error2')
-
-      response.send({status:false,message:'Internal Server error'})
+          response.send({status:false,message:'Internal Server error'})
         }else{
-          response.send({status:true, message:'user confirmed',staffDetails})
+          response.send({status:true, message:'User Authenticated',staffDetails})
         }
       })
     }
@@ -87,7 +77,7 @@ console.log('error0')
 }
 
 const allstaffs=(request,response)=>{
-  StaffModel.find( (err,staffs)=>{
+  StaffModel.find((err,staffs)=>{
     response.send(staffs)
 })
 }

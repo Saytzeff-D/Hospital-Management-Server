@@ -2,8 +2,6 @@ const mongoose=require('mongoose')
 const cloudinary = require('cloudinary')
 // const bcrypt= require('bcryptjs')
 
-
-// const cloudinary = require('cloudinary')
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.API_KEY, 
@@ -37,15 +35,15 @@ console.log(9999)
  console.log('failed to upload')
 }
 else{
-console.log(9000)
-        let publicName=this.fullName
-        let imageUrl=result.secure_url
-        let splitting=imageUrl.split('upload')        
-        let path=splitting[0]+'upload'
-        let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
-        this.photo=newImagepath
-           next()
-       }
+    console.log(9000)
+    let publicName=this.fullName
+    let imageUrl=result.secure_url
+    let splitting=imageUrl.split('upload')        
+    let path=splitting[0]+'upload'
+    let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
+    this.photo=newImagepath
+        next()
+    }
    }); 
 
   })
@@ -53,5 +51,5 @@ console.log(9000)
 
 
 
-let patientModel=mongoose.model('patient', patientSchema)
-    module.exports=  patientModel
+let PatientModel = mongoose.model('patient', patientSchema)
+module.exports = PatientModel
