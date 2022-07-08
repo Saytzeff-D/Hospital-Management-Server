@@ -131,5 +131,18 @@ const deletePat=(request,response)=>{
 
 }
 
+const updatePat=(request,response)=>{
+    // response.send(request.body)
+    console.log(999)
+    patientModel.findByIdAndUpdate(request.body._id,request.body, (err)=>{
+        if(err){
+            response.send({status:false,message:'server error, try again'})
+        }else{
+            response.send({status:true,message:'operation successful'})
+        }
+    })
 
-module.exports={ getLandingPage,registerPatient, retrievePatientId, login,allpat, authenticatePatient,deletePat }
+}
+
+
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat }
