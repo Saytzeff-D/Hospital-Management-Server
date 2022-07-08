@@ -4,14 +4,12 @@ const jwt=require('jsonwebtoken')
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
-
-// console.log(staffDetails)
 StaffModel.findOne({email:staffDetails.email}, (err,result)=>{
   if(err){
     response.status(501).send({status:false,message: 'Internal Server Error'})
     }else{
       if(result){
-        response.send({status:true,message: 'This user has been registered already'})
+        response.send({status:false,message: 'This user has been registered already'})
         }else{
           let form= new StaffModel(staffDetails)
           form.save( (err)=>{
@@ -58,22 +56,22 @@ const login = (req, res) => {
 }
 
 const authenticateStaff=(request,response)=>{
-  console.log('authenticating')
+  // console.log('authenticating')
   let splitJwt= request.headers.authorization.split(' ')
   let token = splitJwt[1]
   const secret=process.env.JWT_SECRET
   console.log(token,secret)
   let staffModel=StaffModel
-console.log('error0')
+
   jwt.verify(token,secret, (err,result)=>{
     if(err){
-      console.log('error1')
+      // console.log('error1')
       response.send({status:false,message:'Internal Server error'})
     }
     else{
       staffModel.findOne({email:result.email}, (err,staffDetails)=>{
         if(err){
-      console.log('error2')
+      // console.log('error2')
 
       response.send({status:false,message:'Internal Server error'})
         }else{

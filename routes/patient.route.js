@@ -3,14 +3,13 @@ const patientRouter=express.Router()
 const patientController= require('../controllers/patient.controller')
 
 
-patientRouter.get('/',patientController.allPatients);
+patientRouter.get('/',patientController.allpat);
 patientRouter.post('/register',patientController.registerPatient);
 patientRouter.post("/login", patientController.login);
+patientRouter.post("/deletePat", patientController.deletePat);
 patientRouter.post('/retrievePatientId', patientController.retrievePatientId)
-patientRouter.get("/allpatient", (req,res)=>{
-    console.log(999)
-res.send({status:true,message:'coreect fteching'})
-});
+patientRouter.get("/allpat", patientController.allpat);
+patientRouter.get('/authPatient', patientController.authenticatePatient)
 
 
 

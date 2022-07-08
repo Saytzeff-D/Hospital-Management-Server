@@ -3,8 +3,10 @@ const chatModel = require('../model/chat.model')
 const getChats = (req, res) => {
   chatModel.find((err, resp) => {
     if(err) {
+      console.log(err)
       res.status(501).send({status: false, message: "internal Server Error"});
     } else {
+      console.log(resp)
       if (resp) {
         res.status(200).send({status: true, message: "success", messages: resp});
       }

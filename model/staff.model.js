@@ -26,6 +26,7 @@ const staffSchema = mongoose.Schema({
   created:String,
   role:String,
   photo:String,
+  speciality:String,
   created:String
 
 })

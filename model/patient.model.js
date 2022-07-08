@@ -3,7 +3,6 @@ const cloudinary = require('cloudinary')
 // const bcrypt= require('bcryptjs')
 
 
-// const cloudinary = require('cloudinary')
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.API_KEY, 
@@ -37,7 +36,6 @@ console.log(9999)
  console.log('failed to upload')
 }
 else{
-console.log(9000)
         let publicName=this.fullName
         let imageUrl=result.secure_url
         let splitting=imageUrl.split('upload')        
