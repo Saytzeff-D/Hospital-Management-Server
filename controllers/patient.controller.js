@@ -1,6 +1,7 @@
 const PatientModel = require("../model/patient.model")
 const nodemailer=require('nodemailer')
 const jwt = require('jsonwebtoken')
+const patientModel = require("../model/patient.model")
 
 const getLandingPage=(req,res)=>{
     res.send('Hello Patient')
@@ -20,7 +21,7 @@ const registerPatient=(req,res)=>{
                 form.save( (err)=>{
                 if(err){
                     console.log(err)
-                    res.status(301).send({status:false, message:'Internal server error'})
+                    res.status(501).send({status:false, message:'Internal server error'})
                 }else{
                     res.status(200).json({message: 'Success', healthId: generateHealthId})
                 }
@@ -119,6 +120,29 @@ const allpat=(request,response)=>{
     response.send(pat)
 })
 }
+const deletePat=(request,response)=>{
+    patientModel.deleteOne({_id:request.body._id}, (err)=>{
+        if(err){
+            response.send({status:false,message:'server error, try again'})
+        }else{
+            response.send({status:true,message:'operation successful'})
+        }
+    })
+
+}
+
+const updatePat=(request,response)=>{
+    // response.send(request.body)
+    console.log(999)
+    patientModel.findByIdAndUpdate(request.body._id,request.body, (err)=>{
+        if(err){
+            response.send({status:false,message:'server error, try again'})
+        }else{
+            response.send({status:true,message:'operation successful'})
+        }
+    })
+
+}
 
 
-module.exports={ getLandingPage,registerPatient, retrievePatientId, login,allpat, authenticatePatient }
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat }
