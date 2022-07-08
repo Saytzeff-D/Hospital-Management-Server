@@ -100,15 +100,13 @@ const login = (req, res) => {
 }
 const authenticatePatient = (req, res)=>{
     const splitJWT = req.headers.authorization.split(' ')
-    console.log(splitJWT)
     jwt.verify(splitJWT[1], process.env.JWT_SECRET, (err, result)=>{
         if(err){
             res.status(100).json({status: false, message: 'Not Verify'})
         }else{
             PatientModel.findOne({email: result.email}, (err, authPatient)=>{
-                console.log(authPatient)
                 if(err){
-                    res.status(300).json({status: false})
+                    res.status(300).json({status: false, message: 'User not found'})
                 }else{
                     res.status(200).json({status: true, authPatient})
                 }
