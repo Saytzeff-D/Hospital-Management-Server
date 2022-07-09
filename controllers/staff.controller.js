@@ -56,7 +56,7 @@ const login = (req, res) => {
 }
 
 const authenticateStaff=(request,response)=>{
-  // console.log('authenticating')
+  console.log(request.headers.authorization)
   let splitJwt= request.headers.authorization.split(' ')
   let token = splitJwt[1]
   const secret=process.env.JWT_SECRET
