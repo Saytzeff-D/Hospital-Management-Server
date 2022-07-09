@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const cloudinary=require('cloudinary')
 const bcrypt=require('bcryptjs')
-const saltround = 10
+const saltround=10
 
 
 cloudinary.config({ 
@@ -26,12 +26,13 @@ const staffSchema = mongoose.Schema({
   created:String,
   role:String,
   photo:String,
+  speciality:String,
   created:String
 
 })
 
 staffSchema.pre('save',  function(next){
-console.log(this.password)
+
 
   bcrypt.hash(this.password,saltround, (err,hashedPassword)=>{
     if(err){
