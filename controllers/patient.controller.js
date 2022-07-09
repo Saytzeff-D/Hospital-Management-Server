@@ -79,7 +79,6 @@ const retrievePatientId = (req, res)=>{
 
 const login = (req, res) => {
     const details = req.body;
-    console.log(details)
     PatientModel.findOne({email: details.email}, (err, response) => {
         if(err) {
             res.status(501).send({status: false, message: "Internal Server Error"});
@@ -105,7 +104,8 @@ const authenticatePatient = (req, res)=>{
         }else{
             PatientModel.findOne({email: result.email}, (err, authPatient)=>{
                 if(err){
-                    res.status(300).json({status: false, message: 'User not found'})
+                    console.log(err, result.email)
+                    res.status(200).json({status: false, message: 'No existence'})
                 }else{
                     res.status(200).json({status: true, authPatient})
                 }
