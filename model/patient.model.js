@@ -24,7 +24,10 @@ let patientSchema= mongoose.Schema({
    maritalStatus:{type:String,require:true},
    created:String,
    photo:{type:String,require:true},
-   healthId: String
+   healthId: String,
+   weight:{type:String,default:'NA'},
+   height:{type:String, default:'NA'},
+   genotype:{type:String, default:'NA'}
 })
 
 
