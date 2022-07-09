@@ -26,7 +26,8 @@ let patientSchema= mongoose.Schema({
    photo:{type:String,require:true},
    healthId: String,
    weight:{type:String,default:'NA'},
-   height:{type:String, default:'NA'}
+   height:{type:String, default:'NA'},
+   genotype:{type:String, default:'NA'}
 })
 
 
