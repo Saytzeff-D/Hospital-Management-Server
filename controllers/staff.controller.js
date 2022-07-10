@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken')
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
+console.log('requeting')
 StaffModel.findOne({email:staffDetails.email}, (err,result)=>{
   if(err){
     response.status(501).send({status:false,message: 'Internal Server Error'})
