@@ -132,7 +132,6 @@ const deletePat=(request,response)=>{
 }
 
 const updatePat=(request,response)=>{
-    // response.send(request.body)
     console.log(999)
     patientModel.findByIdAndUpdate(request.body._id,request.body, (err)=>{
         if(err){
