@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}))
 app.use(bodyParser.json({limit:'50mb'}));
-// app.use(express.json({limit:'50mb'}))
 app.use(cors({origin:'*'}))
 require('dotenv').config()
 const patientRouter = require('./routes/patient.route')
@@ -36,6 +35,7 @@ app.get('/',(req,res)=>{
 
 mongoose.connect(URI,(err)=>{
 if(err){
+  console.log(err)
 	console.log('Error in Connection to MongoDB')
 }else{
 	console.log('Connection to Mongoose Database Initialized')

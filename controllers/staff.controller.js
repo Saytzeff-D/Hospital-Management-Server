@@ -44,9 +44,7 @@ const login = (req, res) => {
           }else{
             if(same){
               const token=jwt.sign({email}, secret, {expiresIn:'60m'})
-              console.log(token)
               res.send({message:'correct password',details:response, status:true,token})
-              console.log('login')
               } else{
                 res.send({status:false, message: 'incorrect password'})
               }
@@ -57,25 +55,21 @@ const login = (req, res) => {
 }
 
 const authenticateStaff=(request,response)=>{
-  console.log(request.headers.authorization)
   let splitJwt= request.headers.authorization.split(' ')
   let token = splitJwt[1]
   const secret=process.env.JWT_SECRET
-  console.log(token,secret)
   let staffModel=StaffModel
 
   jwt.verify(token,secret, (err,result)=>{
     if(err){
-      // console.log('error1')
       response.send({status:false,message:'Internal Server error'})
     }
     else{
       staffModel.findOne({email:result.email}, (err,staffDetails)=>{
         if(err){
-      // console.log('error2')
-
       response.send({status:false,message:'Internal Server error'})
         }else{
+          console.log(staffDetails)
           response.send({status:true, message:'user confirmed',staffDetails})
         }
       })
