@@ -1,9 +1,12 @@
 const StaffModel = require("../model/staff.model")
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
+const patientModel = require("../model/patient.model")
+const AppointmentModel = require("../model/appointment.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
+console.log('requeting')
 StaffModel.findOne({email:staffDetails.email}, (err,result)=>{
   if(err){
     response.status(501).send({status:false,message: 'Internal Server Error'})
@@ -80,10 +83,32 @@ const authenticateStaff=(request,response)=>{
 const allstaffs=(request,response)=>{
   StaffModel.find( (err,staffs)=>{
     response.send(staffs)
+  
 })
+}
+
+const getDashboardInfo=(request,response)=>{
+  let patsNum=0
+  StaffModel.find( (err,staffArr)=>{
+    patientModel.find( (err,pats)=>{
+      AppointmentModel.find((err,appointments)=>{        
+      patsNum=pats.length
+      appointments=appointments.length
+      response.send({status:true,staffArr,patsNum,appointments})
+      })
+    })
+})   
+}
+const allAppointments=(request,response)=>{
+  AppointmentModel.find( (err,result)=>{
+    if(!err){
+      response.send({status:true,appointments:result})
+    }else{
+      response.status(501).send({status:false,message:'Server error'})
+    }
+  })
 }
 
 
 
-
-module.exports = { login,registerStaff,allstaffs,authenticateStaff }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments }

@@ -40,29 +40,29 @@ staffSchema.pre('save',  function(next){
       console.log('cant hash password')
         }else{
           this.password=hashedPassword
-// next()
+next()
           }
       })
 
-let fullName=`${this.fname}_${this.lname}`
-let file=this.photo
+// let fullName=`${this.fname}_${this.lname}`
+// let file=this.photo
 
-cloudinary.v2.uploader.upload(file, {public_id:fullName}, (err,result)=>{
+// cloudinary.v2.uploader.upload(file, {public_id:fullName}, (err,result)=>{
 
-  if(err){
-    console.log('failed to upload')
-    console.log(err)
-    }else{
-      let publicName=fullName
-      let imageUrl=result.secure_url
-      let splitting=imageUrl.split('upload')
-      let path=splitting[0]+'upload'
-      let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
-      // console.log(newImagepath)
-      this.photo=newImagepath
-     next()
-      }
-  })
+//   if(err){
+//     console.log('failed to upload')
+//     console.log(err)
+//     }else{
+//       let publicName=fullName
+//       let imageUrl=result.secure_url
+//       let splitting=imageUrl.split('upload')
+//       let path=splitting[0]+'upload'
+//       let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
+//       // console.log(newImagepath)
+//       this.photo=newImagepath
+//      next()
+//       }
+//   })
 
 })
 
