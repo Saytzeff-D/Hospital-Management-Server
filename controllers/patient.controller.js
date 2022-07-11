@@ -146,7 +146,7 @@ const updatePat=(request,response)=>{
 const addAppointment=(request,response)=>{
     let appointmentDetails=request.body
     appointmentDetails.appointmentNo=`APP${Math.ceil(Math.random()*100000)}`
-    let form= new AppointmentModel
+    let form= new AppointmentModel(appointmentDetails)
     form.save((err)=>{
         if(!err){
             response.send({status:true})
@@ -156,8 +156,8 @@ const addAppointment=(request,response)=>{
     })
 }
 const fetchAppointments=(request,response)=>{
- let healthId=request.body.healthId
-AppointmentModel.find({healthId:healthId},(err,result)=>{
+ let details = request.body
+ AppointmentModel.find({healthId: details.healthId},(err,result)=>{
     if(!err){
         response.send({status:true,appointments:result})
     }else{
