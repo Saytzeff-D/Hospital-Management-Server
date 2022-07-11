@@ -1,6 +1,7 @@
 const StaffModel = require("../model/staff.model")
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
+const patientModel = require("../model/patient.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -82,10 +83,24 @@ const authenticateStaff=(request,response)=>{
 const allstaffs=(request,response)=>{
   StaffModel.find( (err,staffs)=>{
     response.send(staffs)
+  
 })
+}
+
+const getDashboardInfo=(request,response)=>{
+  let staffs=[]
+  let patsNum=3
+  StaffModel.find( (err,staffArr)=>{
+    patientModel.find( (err,pats)=>{
+      patsNum=pats.length
+      response.send({status:true,staffArr,patsNum})
+    })
+})
+  
+
+  
 }
 
 
 
-
-module.exports = { login,registerStaff,allstaffs,authenticateStaff }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo }
