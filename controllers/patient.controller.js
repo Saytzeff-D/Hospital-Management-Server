@@ -2,6 +2,7 @@ const PatientModel = require("../model/patient.model")
 const nodemailer=require('nodemailer')
 const jwt = require('jsonwebtoken')
 const patientModel = require("../model/patient.model")
+const AppointmentModel = require("../model/appointment.model")
 
 const getLandingPage=(req,res)=>{
     res.send('Hello Patient')
@@ -142,6 +143,29 @@ const updatePat=(request,response)=>{
     })
 
 }
+const addAppointment=(request,response)=>{
+    let appointmentDetails=request.body
+    appointmentDetails.appointmentNo=`APP${Math.ceil(Math.random()*100000)}`
+    let form= new AppointmentModel
+    form.save((err)=>{
+        if(!err){
+            response.send({status:true})
+        }else{
+                response.status(501).send({status:false, message:'Internal server error'})
+        }
+    })
+}
+const fetchAppointments=(request,response)=>{
+ let healthId=request.body.healthId
+AppointmentModel.find({healthId:healthId},(err,result)=>{
+    if(!err){
+        response.send({status:true,appointments:result})
+    }else{
+        response.status(501).send({status:false, message:'Internal server error'})
+    }
+    
+}
+ )
+}
 
-
-module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat }
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat,addAppointment,fetchAppointments }
