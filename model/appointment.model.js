@@ -9,7 +9,8 @@ const appointmentSchema = mongoose.Schema({
     shift: String,
     timeSlot: String,
     appointmentPriority: String,
-    message: String
+    message: String,
+    status:{type:Boolean, default:false}
 })
 
 const AppointmentModel = mongoose.model('appointment_tbs', appointmentSchema)
