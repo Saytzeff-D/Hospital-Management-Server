@@ -39,7 +39,6 @@ const login = (req, res) => {
         res.send({status: false, message: "Invalid Email address"});
       }else{
         bcrypt.compare(details.password,response.password, (err,same)=>{
-        console.log(same)
         if(err){
           res.status(501).send({status: false, message: "Internal Server Error"});
           }else{
