@@ -1,12 +1,11 @@
 const StaffModel = require("../model/staff.model")
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
-const patientModel = require("../model/patient.model")
+const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
-console.log('requeting')
 StaffModel.findOne({email:staffDetails.email}, (err,result)=>{
   if(err){
     response.status(501).send({status:false,message: 'Internal Server Error'})
@@ -47,7 +46,7 @@ const login = (req, res) => {
               const token=jwt.sign({email}, secret, {expiresIn:'60m'})
               res.send({message:'correct password',details:response, status:true,token})
               } else{
-                res.send({status:false, message: 'incorrect password'})
+                res.send({status:false, message: 'Incorrect password'})
               }
             }
         })
@@ -59,19 +58,16 @@ const authenticateStaff=(request,response)=>{
   let splitJwt= request.headers.authorization.split(' ')
   let token = splitJwt[1]
   const secret=process.env.JWT_SECRET
-  let staffModel=StaffModel
-
   jwt.verify(token,secret, (err,result)=>{
     if(err){
       response.send({status:false,message:'Internal Server error'})
     }
     else{
-      staffModel.findOne({email:result.email}, (err,staffDetails)=>{
+      StaffModel.findOne({email:result.email}, (err,staffDetails)=>{
         if(err){
       response.send({status:false,message:'Internal Server error'})
         }else{
-          console.log(staffDetails)
-          response.send({status:true, message:'user confirmed',staffDetails})
+          response.send({status:true, message:'User Authenticated',staffDetails})
         }
       })
     }
@@ -90,7 +86,7 @@ const allstaffs=(request,response)=>{
 const getDashboardInfo=(request,response)=>{
   let patsNum=0
   StaffModel.find( (err,staffArr)=>{
-    patientModel.find( (err,pats)=>{
+    PatientModel.find( (err,pats)=>{
       AppointmentModel.find((err,appointments)=>{        
       patsNum=pats.length
       appointments=appointments.length

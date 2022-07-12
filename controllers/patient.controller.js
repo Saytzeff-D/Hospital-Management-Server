@@ -3,6 +3,7 @@ const nodemailer=require('nodemailer')
 const jwt = require('jsonwebtoken')
 const patientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
+const PaymentModel = require("../model/payment.model")
 
 const getLandingPage=(req,res)=>{
     res.send('Hello Patient')
@@ -151,7 +152,7 @@ const addAppointment=(request,response)=>{
         if(!err){
             response.send({status:true})
         }else{
-                response.status(501).send({status:false, message:'Internal server error'})
+            response.status(501).send({status:false, message:'Internal server error'})
         }
     })
 }
@@ -167,5 +168,22 @@ const fetchAppointments=(request,response)=>{
 }
  )
 }
+const payAppointmentBill = (req, res)=>{
+    let details = req.body
+    AppointmentModel.findByIdAndUpdate(details.user._id, {paymentStatus: true}, (err, result)=>{
+        if (!err) {
+            let form = PaymentModel(details.payment)
+            form.save((err)=>{
+                if(!err){
+                    res.status(200).json({status: true})
+                }else{
+                    res.status(300).json({message: 'Unable to add payment record'})
+                }
+            })
+        } else {
+            res.status(300).json({message: 'Server Error'})
+        }
+    })
+}
 
-module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat,addAppointment,fetchAppointments }
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat,addAppointment,fetchAppointments, payAppointmentBill }

@@ -13,6 +13,7 @@ patientRouter.get("/allpat", patientController.allpat);
 patientRouter.get('/authPatient', patientController.authenticatePatient)
 patientRouter.post('/addAppointment',patientController.addAppointment)
 patientRouter.post('/fetchAppointments',patientController.fetchAppointments)
+patientRouter.post('/payAppointment', patientController.payAppointmentBill)
 
 
 
