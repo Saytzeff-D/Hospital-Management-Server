@@ -32,34 +32,27 @@ const staffSchema = mongoose.Schema({
 })
 
 staffSchema.pre('save',  function(next){
-
-
   bcrypt.hash(this.password,saltround, (err,hashedPassword)=>{
     if(err){
       console.log(err)
       console.log('cant hash password')
         }else{
           this.password=hashedPassword
-// next()
           }
       })
-
-let fullName=`${this.fname}_${this.lname}`
-let file=this.photo
-
-cloudinary.v2.uploader.upload(file, {public_id:fullName}, (err,result)=>{
+  const fullName = `${this.fname}_${this.lname}`
+  cloudinary.v2.uploader.upload(this.photo, {public_id: fullName}, (err,result)=>{
 
   if(err){
     console.log('failed to upload')
     console.log(err)
     }else{
-      let publicName=fullName
-      let imageUrl=result.secure_url
-      let splitting=imageUrl.split('upload')
+      let publicName = fullName
+      let imageUrl = result.secure_url
+      let splitting = imageUrl.split('upload')
       let path=splitting[0]+'upload'
-      let newImagepath=`${path}/${'w_250,c_scale'}/${publicName}`
-      // console.log(newImagepath)
-      this.photo=newImagepath
+      let newImagepath = `${path}/${'w_250,c_scale'}/${publicName}`
+      this.photo = newImagepath
      next()
       }
   })
@@ -68,6 +61,5 @@ cloudinary.v2.uploader.upload(file, {public_id:fullName}, (err,result)=>{
 
 
 let StaffModel = mongoose.model("staff", staffSchema);
-// console.log('database stored')
 
 module.exports = StaffModel;
