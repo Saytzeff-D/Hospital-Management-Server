@@ -104,16 +104,19 @@ const allAppointments=(request,response)=>{
     }
   })
 }
-const del = (req, res)=>{
-  AppointmentModel.deleteOne({_id: '62cc7f11c733e6a015330fa3'}, (err, result)=>{
-    if(err){
-      throw err
+const checkAppointment=(request,response)=>{
+  AppointmentModel.findByIdAndUpdate(request.body._id,{approvalStatus:true},(err)=>{
+    if(!err){
+      response.send({status:true})
     }else{
-      res.send(result)
+      response.status(501).send({status:false})
     }
+    
   })
+
 }
 
 
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments,checkAppointment }
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments, del }
+
