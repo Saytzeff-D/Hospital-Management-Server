@@ -108,7 +108,17 @@ const allAppointments=(request,response)=>{
     }
   })
 }
+const checkAppointment=(request,response)=>{
+  AppointmentModel.findByIdAndUpdate(request.body._id,request.body,(err)=>{
+    if(!err){
+      response.send({status:true})
+    }else{
+      response.status(501).send({status:false})
+    }
+    
+  })
+
+}
 
 
-
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments,checkAppointment }
