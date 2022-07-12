@@ -7,5 +7,6 @@ staffRouter.get("/allStaffs", staffController.allstaffs);
 staffRouter.get("/dashboard", staffController.authenticateStaff);
 staffRouter.get('/getDashboardInfo',staffController.getDashboardInfo)
 staffRouter.get("/allAppointments", staffController.allAppointments);
+staffRouter.get('/delAppoint', staffController.del)
 
 module.exports = staffRouter

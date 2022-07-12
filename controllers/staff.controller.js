@@ -108,7 +108,16 @@ const allAppointments=(request,response)=>{
     }
   })
 }
+const del = (req, res)=>{
+  AppointmentModel.deleteOne({_id: '62cc7f11c733e6a015330fa3'}, (err, result)=>{
+    if(err){
+      throw err
+    }else{
+      res.send(result)
+    }
+  })
+}
 
 
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments, del }
