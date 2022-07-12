@@ -170,8 +170,13 @@ const fetchAppointments=(request,response)=>{
 }
 const payAppointmentBill = (req, res)=>{
     let details = req.body
-    AppointmentModel.findByIdAndUpdate(details.user._id, {paymentStatus: true}, (err, result)=>{
-        if (!err) {
+    console.log(details.appointment)
+    AppointmentModel.findByIdAndUpdate(details.appointment.appointmentNo, {paymentStatus: true}, (err, result)=>{
+        console.log(err)
+        if (err) {
+            res.status(300).json({message: 'Server Error'})            
+        } else {
+            console.log(result)
             let form = PaymentModel(details.payment)
             form.save((err)=>{
                 if(!err){
@@ -180,8 +185,6 @@ const payAppointmentBill = (req, res)=>{
                     res.status(300).json({message: 'Unable to add payment record'})
                 }
             })
-        } else {
-            res.status(300).json({message: 'Server Error'})
         }
     })
 }
