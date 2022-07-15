@@ -8,5 +8,7 @@ staffRouter.get("/dashboard", staffController.authenticateStaff);
 staffRouter.get('/getDashboardInfo',staffController.getDashboardInfo)
 staffRouter.get("/allAppointments", staffController.allAppointments);
 staffRouter.post('/checkAppointment',staffController.checkAppointment)
-
+staffRouter.post('/getPat',staffController.getPatDetails)
+staffRouter.post('/updateApp',staffController.updateApp)
+staffRouter.post('/addMedicine',staffController.addMedicine)
 module.exports = staffRouter
