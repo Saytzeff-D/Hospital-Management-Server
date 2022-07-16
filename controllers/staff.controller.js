@@ -3,8 +3,6 @@ const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
-const patientModel = require("../model/patient.model")
-const MedicineModel = require("../model/medicine.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -97,26 +95,6 @@ const getDashboardInfo=(request,response)=>{
     })
 })   
 }
-const allAppointments=(request,response)=>{
-  AppointmentModel.find( (err,result)=>{
-    if(!err){
-      response.send({status:true,appointments:result})
-    }else{
-      response.status(501).send({status:false,message:'Server error'})
-    }
-  })
-}
-const checkAppointment=(request,response)=>{
-  AppointmentModel.findByIdAndUpdate(request.body._id,{approvalStatus:true},(err)=>{
-    if(!err){
-      response.send({status:true})
-    }else{
-      response.status(501).send({status:false})
-    }
-    
-  })
-
-}
 const getPatDetails=(request,response)=>{
   PatientModel.findOne({healthId:request.body.healthId}, (err,patient)=>{
     if(!err){
@@ -128,65 +106,4 @@ const getPatDetails=(request,response)=>{
   })
 }
 
-const updateApp=(request,response)=>{
-  let id=request.body._id
-  let appointmentDate=request.body.appointmentDate
-  let shift=request.body.shift
-  let timeSlot=request.body.timeSlot
-
-  AppointmentModel.findByIdAndUpdate(id, {appointmentDate:appointmentDate,shift:shift,timeSlot:timeSlot}, (err)=>{
-    if(!err){
-      response.send({status:true})
-    }else{
-      response.send({status:false})
-    }
-    })
-}
-const addMedicine=(request,response)=>{
-  let medicineName=request.body.medicineName.toUpperCase()
-  request.body.medicineName=medicineName
-  request.body.availableQty=request.body.unit
-
-
-  MedicineModel.findOne({medicineName:medicineName},(err,result)=>{
-    if(err){
-      response.status(501).send({status:false,message:'internal server error'})
-
-    }else{
-      if(result){
-        console.log(result)
-        let drug=result
-        drug.unit=request.body.unit
-        console.log(drug.availableQty,request.body.availableQty)
-        drug.availableQty= Number(drug.availableQty)+Number(request.body.availableQty)
-        console.log(drug)
-        updateDrug(drug,response)
-      }else{
-        let form= new MedicineModel(request.body)
-        form.save(err=>{
-          if(!err){
-            response.send({status:true,message:'item succesfully saved'})}else{
-      response.status(501).send({status:false,message:'internal server error'})
-      }
-        })       
-         }
-         }
-
-  })
-}
-
-const updateDrug=(drug,response)=>{
-  MedicineModel.findByIdAndUpdate(drug._id,drug, (err)=>{
-    if(!err){
-      response.send({status:true,message:'item updated'})
-    }else{
-      response.send({status:false})
-    }
-    })
-}
-
-
-
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments,checkAppointment,getPatDetails,updateApp,addMedicine }
-
-
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails }

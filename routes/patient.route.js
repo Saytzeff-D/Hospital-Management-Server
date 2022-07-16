@@ -1,20 +1,19 @@
-const express= require('express')
+const express= require('express');
+const { addAppointment, fetchAppointments, payAppointmentBill } = require('../controllers/appointment.controller');
+const { authenticatePatient, allPatient, retrievePatientId, updatePat, deletePat, login, registerPatient } = require('../controllers/patient.controller');
 const patientRouter=express.Router()
-const patientController= require('../controllers/patient.controller')
 
 
-patientRouter.get('/',patientController.allpat);
-patientRouter.post('/register',patientController.registerPatient);
-patientRouter.post("/login", patientController.login);
-patientRouter.post("/deletePat", patientController.deletePat);
-patientRouter.post("/updatePat", patientController.updatePat);
-patientRouter.post('/retrievePatientId', patientController.retrievePatientId)
-patientRouter.get("/allpat", patientController.allpat);
-patientRouter.get('/authPatient', patientController.authenticatePatient)
-patientRouter.post('/addAppointment',patientController.addAppointment)
-patientRouter.post('/fetchAppointments',patientController.fetchAppointments)
-patientRouter.post('/payAppointment', patientController.payAppointmentBill)
+patientRouter.post('/register', registerPatient);
+patientRouter.post("/login",  login);
+patientRouter.post("/deletePat",  deletePat);
+patientRouter.post("/updatePat",  updatePat);
+patientRouter.post('/retrievePatientId',  retrievePatientId)
+patientRouter.get("/allPatient",  allPatient);
+patientRouter.get('/authPatient',  authenticatePatient)
+patientRouter.post('/addAppointment', addAppointment)
+patientRouter.post('/fetchAppointments', fetchAppointments)
+patientRouter.post('/payAppointment', payAppointmentBill)
 
 
-
-module.exports=patientRouter
+module.exports = patientRouter
