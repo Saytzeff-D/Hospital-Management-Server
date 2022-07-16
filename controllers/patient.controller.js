@@ -1,6 +1,5 @@
 const PatientModel = require("../model/patient.model")
 const jwt = require('jsonwebtoken')
-const PatientModel = require("../model/patient.model")
 
 const { transporter, mailOptions } = require("./mail.controller")
 
