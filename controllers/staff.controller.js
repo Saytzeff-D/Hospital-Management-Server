@@ -166,11 +166,11 @@ const addMedicine=(request,response)=>{
         form.save(err=>{
           if(!err){
             response.send({status:true,message:'item succesfully saved'})}else{
-      response.status(501).send({status:false,message:'internal server error'})
+              response.status(501).send({status:false,message:'internal server error'})
+              }
+           })       
+        }
       }
-        })       
-         }
-         }
 
   })
 }
