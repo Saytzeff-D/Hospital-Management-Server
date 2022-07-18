@@ -42,5 +42,16 @@ const addMedicine=(request,response)=>{
       }
       })
   }
-let medFunc = { addMedicine }
+const allMedicine=(requets,response)=>{
+  MedicineModel.find( (err,result)=>{
+    if(!err){
+      response.send({status:true,drugs:result})
+    }else{
+      response.send({status:false,message:'internal server error'})
+    }
+  })
+
+}
+
+let medFunc = { addMedicine,allMedicine }
 module.exports = medFunc
