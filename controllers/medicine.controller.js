@@ -23,7 +23,7 @@ const addMedicine=(request,response)=>{
           let form = new MedicineModel(request.body)
           form.save(err=>{
             if(!err){
-              response.send({status:true,message:'item succesfully saved'})}else{
+              response.send({status:true,message:'Medicine Successfully Added'})}else{
         response.status(501).send({status:false,message:'internal server error'})
         }
           })       

@@ -45,7 +45,7 @@ const retrievePatientId = (req, res)=>{
                     } 
                     else {
                         console.log(info)   
-                        res.status(200).json({message: 'A message has been sent to your E-Mail Account. Please Check.'})         
+                        res.status(200).json({message: 'Your Health Id has been successfully sent to your E-Mail Address.'})         
                     }
                   });
             }else{
