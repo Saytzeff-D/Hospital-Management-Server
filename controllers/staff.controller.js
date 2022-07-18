@@ -3,8 +3,6 @@ const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
-const patientModel = require("../model/patient.model")
-const MedicineModel = require("../model/medicine.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -97,26 +95,6 @@ const getDashboardInfo=(request,response)=>{
     })
 })   
 }
-const allAppointments=(request,response)=>{
-  AppointmentModel.find( (err,result)=>{
-    if(!err){
-      response.send({status:true,appointments:result})
-    }else{
-      response.status(501).send({status:false,message:'Server error'})
-    }
-  })
-}
-const checkAppointment=(request,response)=>{
-  AppointmentModel.findByIdAndUpdate(request.body._id,{approvalStatus:true},(err)=>{
-    if(!err){
-      response.send({status:true})
-    }else{
-      response.status(501).send({status:false})
-    }
-    
-  })
-
-}
 const getPatDetails=(request,response)=>{
   PatientModel.findOne({healthId:request.body.healthId}, (err,patient)=>{
     if(!err){
@@ -187,6 +165,5 @@ const updateDrug=(drug,response)=>{
 
 
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,allAppointments,checkAppointment,getPatDetails,updateApp,addMedicine }
-
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine }
 

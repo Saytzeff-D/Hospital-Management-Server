@@ -1,9 +1,7 @@
 const PatientModel = require("../model/patient.model")
-const nodemailer=require('nodemailer')
 const jwt = require('jsonwebtoken')
-const patientModel = require("../model/patient.model")
-const AppointmentModel = require("../model/appointment.model")
-const PaymentModel = require("../model/payment.model")
+
+const { transporter, mailOptions } = require("./mail.controller")
 
 const getLandingPage=(req,res)=>{
     res.send('Hello Patient')
@@ -39,31 +37,8 @@ const retrievePatientId = (req, res)=>{
         if(err){
             res.status(300).json({status: false, message: 'Server Error'})
         }else{
-            console.log(result)
-            if(result){
-                let transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    port: 465,
-                    secure: true,
-                    auth: {
-                      user:process.env.ADMIN_EMAIL,
-                      pass:process.env.ADMIN_PASSWORD
-                    }
-                  });
-                  
-                  let mailOptions = {
-                    from: process.env.ADMIN_EMAIL,
-                    to: userEmail,
-                    subject: 'Hospital Management Software: Patient Id Retrieval',
-                    html: `Dear Patient, Welcome to the Hospital Management Software. We care about your wellbeing and health status. Below is your Patient Id. Do not disclose this to anyone.
-                     <br>   
-                     <b>
-                     Health ID: ${result.healthId}       
-                     </b>
-                    `
-                  };
-                  
-                  transporter.sendMail(mailOptions, (error, info)=>{
+            if(result){                  
+                  transporter.sendMail(mailOptions(result.healthId, userEmail), (error, info)=>{
                     if (error) {
                         console.log(error)
                         res.status(501).send({status:false, message:'Unable to Send Email. Mailer Error'})
@@ -116,14 +91,13 @@ const authenticatePatient = (req, res)=>{
         }
     })
 }
-
-const allpat=(request,response)=>{
+const allPatient=(request,response)=>{
   PatientModel.find( (err,pat)=>{
     response.send(pat)
 })
 }
 const deletePat=(request,response)=>{
-    patientModel.deleteOne({_id:request.body._id}, (err)=>{
+    PatientModel.deleteOne({_id:request.body._id}, (err)=>{
         if(err){
             response.send({status:false,message:'server error, try again'})
         }else{
@@ -135,7 +109,7 @@ const deletePat=(request,response)=>{
 
 const updatePat=(request,response)=>{
     console.log(999)
-    patientModel.findByIdAndUpdate(request.body._id,request.body, (err)=>{
+    PatientModel.findByIdAndUpdate(request.body._id,request.body, (err)=>{
         if(err){
             response.send({status:false,message:'server error, try again'})
         }else{
@@ -144,49 +118,5 @@ const updatePat=(request,response)=>{
     })
 
 }
-const addAppointment=(request,response)=>{
-    let appointmentDetails=request.body
-    appointmentDetails.appointmentNo=`APP${Math.ceil(Math.random()*100000)}`
-    let form= new AppointmentModel(appointmentDetails)
-    form.save((err)=>{
-        if(!err){
-            response.send({status:true})
-        }else{
-            response.status(501).send({status:false, message:'Internal server error'})
-        }
-    })
-}
-const fetchAppointments=(request,response)=>{
- let details = request.body
- AppointmentModel.find({healthId: details.healthId},(err,result)=>{
-    if(!err){
-        response.send({status:true,appointments:result})
-    }else{
-        response.status(501).send({status:false, message:'Internal server error'})
-    }
-    
-}
- )
-}
-const payAppointmentBill = (req, res)=>{
-    let details = req.body
-    console.log(details.appointment)
-    AppointmentModel.findByIdAndUpdate(details.appointment.appointmentNo, {paymentStatus: true}, (err, result)=>{
-        console.log(err)
-        if (err) {
-            res.status(300).json({message: 'Server Error'})            
-        } else {
-            console.log(result)
-            let form = PaymentModel(details.payment)
-            form.save((err)=>{
-                if(!err){
-                    res.status(200).json({status: true})
-                }else{
-                    res.status(300).json({message: 'Unable to add payment record'})
-                }
-            })
-        }
-    })
-}
 
-module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allpat, authenticatePatient,deletePat,addAppointment,fetchAppointments, payAppointmentBill }
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allPatient, authenticatePatient,deletePat }
