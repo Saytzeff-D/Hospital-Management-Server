@@ -240,5 +240,3 @@ const allDeath=(request,response)=>{
 }
 
 module.exports = { login,registerStaff,addBirth,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine,allBirths,addDeath,allDeath}
-
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails }
