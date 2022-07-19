@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const cloudinary=require('cloudinary')
+const cloudinary = require('cloudinary')
 const bcrypt=require('bcryptjs')
-const saltround=10
+const saltRound = 10
 
 
 cloudinary.config({ 
@@ -9,8 +9,6 @@ cloudinary.config({
   api_key: process.env.API_KEY, 
   api_secret: process.env.API_SECRET
 });
-
-
 
 const staffSchema = mongoose.Schema({
   fname: String,
@@ -32,19 +30,19 @@ const staffSchema = mongoose.Schema({
 })
 
 staffSchema.pre('save',  function(next){
-  bcrypt.hash(this.password,saltround, (err,hashedPassword)=>{
+  bcrypt.hash(this.password, saltRound, (err, hashedPassword)=>{
     if(err){
       console.log(err)
-      console.log('cant hash password')
+      console.log('Unable to hash Password')
         }else{
-          this.password=hashedPassword
+          this.password = hashedPassword
           }
       })
   const fullName = `${this.fname}_${this.lname}`
   cloudinary.v2.uploader.upload(this.photo, {public_id: fullName}, (err,result)=>{
 
   if(err){
-    console.log('failed to upload')
+    console.log('Failed to upload')
     console.log(err)
     }else{
       let publicName = fullName
