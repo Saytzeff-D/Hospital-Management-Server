@@ -2,9 +2,9 @@ const AppointmentModel = require("../model/appointment.model")
 const PaymentModel = require("../model/payment.model")
 
 const addAppointment=(request,response)=>{
-    let appointmentDetails=request.body
-    appointmentDetails.appointmentNo=`APP${Math.ceil(Math.random()*100000)}`
-    let form= new AppointmentModel(appointmentDetails)
+    let appointmentDetails = request.body
+    appointmentDetails.appointmentNo =`APP${Math.ceil(Math.random()*100000)}`
+    let form = new AppointmentModel(appointmentDetails)
     form.save((err)=>{
         if(!err){
             response.send({status:true})
@@ -15,7 +15,7 @@ const addAppointment=(request,response)=>{
 }
 const fetchAppointments=(request,response)=>{
  let details = request.body
- AppointmentModel.find({healthId: details.healthId},(err,result)=>{
+ AppointmentModel.find({healthId: details.healthId}, (err,result)=>{
     if(!err){
         response.send({status:true,appointments:result})
     }else{
@@ -48,14 +48,14 @@ const payAppointmentBill = (req, res)=>{
 const allAppointments=(request,response)=>{
     AppointmentModel.find( (err,result)=>{
       if(!err){
-        response.send({status:true,appointments:result})
+        response.send({status:true, appointments:result})
       }else{
-        response.status(501).send({status:false,message:'Server error'})
+        response.status(501).send({status:false, message:'Server error'})
       }
     })
   }
   const checkAppointment=(request,response)=>{
-    AppointmentModel.findByIdAndUpdate(request.body._id,{approvalStatus:true},(err)=>{
+    AppointmentModel.findByIdAndUpdate(request.body._id, {approvalStatus:true},(err)=>{
       if(!err){
         response.send({status:true})
       }else{
