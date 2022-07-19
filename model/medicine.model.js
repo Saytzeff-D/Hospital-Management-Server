@@ -10,3 +10,4 @@ const medicineSchema = mongoose.Schema({
 
 const MedicineModel = mongoose.model('medStock_tbs', medicineSchema)
 module.exports = MedicineModel
+
