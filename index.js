@@ -38,15 +38,13 @@ if(err){
   console.log(err)
 	console.log('Error in Connection to MongoDB')
 }else{
-	console.log('Connection to Mongoose Database Initialized')
+	console.log("I'm now connected to Mongoose Database")
 }
 })
 
 const connection = app.listen(PORT,()=>{
 	console.log('Hospital Management Server listening on Port 4000');
 })
-
-// PAT830
 
 const io = require("socket.io")(connection, {cors: {options: "*"}});
 
