@@ -1,4 +1,4 @@
-const express= require('express');
+const express = require('express');
 const { addAppointment, fetchAppointments, payAppointmentBill } = require('../controllers/appointment.controller');
 const { authenticatePatient, allPatient, retrievePatientId, updatePat, deletePat, login, registerPatient } = require('../controllers/patient.controller');
 const patientRouter=express.Router()
