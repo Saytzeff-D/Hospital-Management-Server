@@ -1,6 +1,7 @@
 const MedicineModel = require("../model/medicine.model")
 
 const addMedicine=(request,response)=>{
+  request.body.availableQty=request.body.unit
   let form = new MedicineModel(request.body)
   form.save(err=>{
     if(!err){

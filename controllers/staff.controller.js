@@ -3,6 +3,8 @@ const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
+const BirthModel = require("../model/birthRecord.model")
+const DeathModel = require("../model/deathRecord.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -163,7 +165,79 @@ const updateDrug=(drug,response)=>{
     })
 }
 
+const addBirth=(request,response)=>{
+  let details=request.body
+  details.recordsId=`BAE${Math.floor(Math.random()*10000)}`
+  BirthModel.findOne({childName:details.childName}, (err,result)=>{
+    if(!err){
+      if(result){
+        response.send({status:false, message:'This record already exist'})
+      }else{
+        let form=new BirthModel(details)
+        form.save( (err)=>{
+          if(!err){
+            response.send({status:true, message:'Record succesfully saved.'})
 
+          }else{
+            response.status(501).send({status:false,message:'Internal server error, Try again.'})
+          }
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine }
+        })
+      }
+
+    }else{
+      response.status(501).send({status:false,message:'Internal server error, Try again.'})
+    }
+  })
+}
+const allBirths=(request,response)=>{
+  BirthModel.find((err,result)=>{
+    if(!err){
+      response.send({status:true,babies:result, message:'Fetched succesfully'})
+    }else{
+      response.send({status:false, message:'internal Server error'})
+    }
+  })
+
+}
+
+const addDeath=(request,response)=>{
+  let details=request.body
+  details.recordsId=`RIP${Math.floor(Math.random()*10000)}`
+  console.log(details.patientName)
+  DeathModel.findOne({patientName:details.patientName}, (err,result)=>{
+    if(!err){
+      if(result){
+        response.send({status:false, message:'This record already exist'})
+      }else{
+        let form=new DeathModel(details)
+        form.save( (err)=>{
+          if(!err){
+            response.send({status:true, message:'Record succesfully saved.'})
+
+          }else{
+            response.status(501).send({status:false,message:'Internal server error, Try again.'})
+          }
+
+        })
+      }
+
+    }else{
+      response.status(501).send({status:false,message:'Internal server error, Try again.'})
+    }
+  })
+}
+
+const allDeath=(request,response)=>{
+  DeathModel.find((err,result)=>{
+    if(!err){
+      response.send({status:true,result, message:'Fetched succesfully'})
+    }else{
+      response.send({status:false, message:'internal Server error'})
+    }
+  })
+
+}
+
+module.exports = { login,registerStaff,addBirth,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine,allBirths,addDeath,allDeath}
 
