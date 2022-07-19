@@ -8,4 +8,5 @@ const paymentSchema = mongoose.Schema({
 })
 
 const PaymentModel = mongoose.model('payment_tbs', paymentSchema)
+
 module.exports = PaymentModel
