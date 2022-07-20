@@ -8,7 +8,7 @@
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "codepie",
+  "author": "davify",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
