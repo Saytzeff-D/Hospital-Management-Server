@@ -5,6 +5,8 @@ const deathSchema= mongoose.Schema({
     deathDate:String,
     guardianName:String,
     patientName:String,
+    gender: String,
+    age: String,
     report:String
 })
 const DeathModel=mongoose.model('death_tb',deathSchema)
