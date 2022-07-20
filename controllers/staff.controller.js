@@ -5,6 +5,7 @@ const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
 const BirthModel = require("../model/birthRecord.model")
 const DeathModel = require("../model/deathRecord.model")
+const PrescriptionModel = require("../model/prescription.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -249,4 +250,26 @@ const updateMortality=(healthId,response)=>{
   })
 }
 
-module.exports = { login,registerStaff,addBirth,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine,allBirths,addDeath,allDeath}
+const addPresc=(request,response)=>{
+  request.body.prescriptionId=`PRES${Math.floor(Math.random()*10000)}`
+  let form=new PrescriptionModel(request.body)
+  form.save(err=>{
+    if(!err){
+      response.send({status:true, message:'prescription saved.'})
+    }else{
+      response.status(501).send({status:false,message:'Internal server error, Try again.'})
+    }
+  })
+}
+const allPres=(request,response)=>{
+  PrescriptionModel.find((err,result)=>{
+    if(!err){
+      response.send({status:true,result, message:'Fetched succesfully'})
+    }else{
+      response.send({status:false, message:'internal Server error'})
+    }
+  })
+
+}
+
+module.exports = { login,registerStaff,addBirth,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine,allBirths,addDeath,allDeath,addPresc,allPres}
