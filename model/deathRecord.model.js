@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const deathSchema= mongoose.Schema({
     recordsId:String,
+    healthId:String,
     deathDate:String,
     guardianName:String,
     patientName:String,

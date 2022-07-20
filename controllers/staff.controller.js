@@ -213,8 +213,7 @@ const addDeath=(request,response)=>{
         let form=new DeathModel(details)
         form.save( (err)=>{
           if(!err){
-            response.send({status:true, message:'Record succesfully saved.'})
-
+            updateMortality(details._id,response)          
           }else{
             response.status(501).send({status:false,message:'Internal server error, Try again.'})
           }
@@ -237,6 +236,17 @@ const allDeath=(request,response)=>{
     }
   })
 
+}
+
+const updateMortality=(healthId,response)=>{
+  console.log(healthId)
+  PatientModel.findByIdAndUpdate({_id:healthId},{mortality:true}, (err)=>{
+    if(!err){
+      response.send({status:true,message:'Saved succesfully'})
+    }else{
+      response.send({status:false, message:'internal Server error'})
+    }
+  })
 }
 
 module.exports = { login,registerStaff,addBirth,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails,updateApp,addMedicine,allBirths,addDeath,allDeath}
