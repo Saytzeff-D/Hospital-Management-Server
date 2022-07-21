@@ -1,7 +1,9 @@
 const staffRouter = require("express").Router();
 const { allAppointments, checkAppointment, updateAppointment } = require("../controllers/appointment.controller");
-const { registerStaff, login, allstaffs, authenticateStaff, getDashboardInfo, getPatDetails,addBirth,allBirths, addDeath, allDeath, addPresc, allPres } = require('../controllers/staff.controller')
+const { registerStaff, login, allstaffs, authenticateStaff, getDashboardInfo, getPatDetails } = require('../controllers/staff.controller')
 const { addMedicine,allMedicine,updateDrug,delMedicine } = require("../controllers/medicine.controller");
+const { addBirth, fetchAllBirth, addToMortality, fetchAllMortality } = require("../controllers/records.controller");
+const { addPresc, fetchAllPresc } = require("../controllers/prescription.controller");
 
 staffRouter.post('/register', registerStaff);
 staffRouter.post("/login", login);
@@ -15,12 +17,12 @@ staffRouter.post('/updateApp', updateAppointment)
 staffRouter.post('/addMedicine', addMedicine)
 staffRouter.post('/updateMed',updateDrug)
 staffRouter.post('/delMedicine',delMedicine)
-staffRouter.post('/addBirth',addBirth)
-staffRouter.get('/getBirth',allBirths)
-staffRouter.post('/addDeath',addDeath)
-staffRouter.get('/getDeath',allDeath)
+staffRouter.post('/addBirth', addBirth)
+staffRouter.get('/getBirth', fetchAllBirth)
+staffRouter.post('/addDeath', addToMortality)
+staffRouter.get('/getDeath', fetchAllMortality)
 staffRouter.get('/allMedicines',allMedicine)
-staffRouter.post('/addPrescription',addPresc)
-staffRouter.get('/allPrescription',allPres)
+staffRouter.post('/addPrescription', addPresc)
+staffRouter.get('/allPrescription', fetchAllPresc)
 
 module.exports = staffRouter
