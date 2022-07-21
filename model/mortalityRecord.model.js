@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const deathSchema= mongoose.Schema({
+const mortalitySchema= mongoose.Schema({
     recordsId:String,
     healthId:String,
     deathDate:String,
@@ -9,5 +9,5 @@ const deathSchema= mongoose.Schema({
     age: String,
     report:String
 })
-const DeathModel=mongoose.model('death_tb',deathSchema)
-module.exports=DeathModel
+const MortalityModel = mongoose.model('mortality_tb', mortalitySchema)
+module.exports = MortalityModel
