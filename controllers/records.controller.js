@@ -3,7 +3,7 @@ const MortalityModel = require("../model/mortalityRecord.model")
 
 const addBirth=(request,response)=>{
     let details=request.body
-    details.recordsId=`BAE${Math.floor(Math.random()*10000)}`
+    details.recordsId=`BREF${Math.floor(Math.random()*10000)}`
     NatalityModel.findOne({childName:details.childName}, (err,result)=>{
       if(!err){
         if(result){
@@ -39,7 +39,7 @@ const addBirth=(request,response)=>{
   
   const addToMortality = (request,response)=>{
     let details=request.body
-    details.recordsId=`RIP${Math.floor(Math.random()*10000)}`
+    details.recordsId=`DREF${Math.floor(Math.random()*10000)}`
     console.log(details.patientName)
     MortalityModel.findOne({patientName:details.patientName}, (err,result)=>{
       if(!err){
