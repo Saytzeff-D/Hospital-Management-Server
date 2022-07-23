@@ -11,5 +11,5 @@ const birthSchema= mongoose.Schema({
     fatherName:String,
     report:String
 })
-const BirthModel=mongoose.model('birth_tb',birthSchema)
-module.exports=BirthModel
+const NatalityModel = mongoose.model('natality_tb',birthSchema)
+module.exports = NatalityModel
