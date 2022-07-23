@@ -1,5 +1,6 @@
 const AppointmentModel = require("../model/appointment.model")
 const PaymentModel = require("../model/payment.model")
+const PrescriptionModel = require("../model/prescription.model")
 
 const addAppointment=(request,response)=>{
     let appointmentDetails = request.body
@@ -80,5 +81,23 @@ const allAppointments=(request,response)=>{
       })
   }
 
-let appointmentFunc = { addAppointment, fetchAppointments, payAppointmentBill, allAppointments, checkAppointment, updateAppointment }
+  const getPatInfo=(request,response)=>{
+    let healthId=request.body.healthId
+    AppointmentModel.find({healthId:healthId}, (err,Apps)=>{
+      if(!err){
+        PrescriptionModel.find({healthId:healthId}, (errs,Pres)=>{
+          if(!err){            
+            response.send({status:true,AppNo:Apps.length,presNo:Pres.length})
+          }else{
+          response.send({status:false})
+          }
+        })
+      }else{
+        response.send({status:false})
+      }
+    })
+
+  }
+
+let appointmentFunc = { addAppointment,getPatInfo, fetchAppointments, payAppointmentBill, allAppointments, checkAppointment, updateAppointment }
 module.exports = appointmentFunc

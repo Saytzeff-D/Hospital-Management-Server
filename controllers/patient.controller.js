@@ -119,4 +119,5 @@ const updatePat=(request,response)=>{
 
 }
 
+
 module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allPatient, authenticatePatient,deletePat }

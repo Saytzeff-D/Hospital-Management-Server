@@ -1,5 +1,5 @@
 const express = require('express');
-const { addAppointment, fetchAppointments, payAppointmentBill } = require('../controllers/appointment.controller');
+const { addAppointment, fetchAppointments, payAppointmentBill, getPatInfo } = require('../controllers/appointment.controller');
 const { authenticatePatient, allPatient, retrievePatientId, updatePat, deletePat, login, registerPatient } = require('../controllers/patient.controller');
 const patientRouter=express.Router()
 
@@ -14,6 +14,8 @@ patientRouter.get('/authPatient',  authenticatePatient)
 patientRouter.post('/addAppointment', addAppointment)
 patientRouter.post('/fetchAppointments', fetchAppointments)
 patientRouter.post('/payAppointment', payAppointmentBill)
+patientRouter.post('/getInfo', getPatInfo)
+
 
 
 module.exports = patientRouter
