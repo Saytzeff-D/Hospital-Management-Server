@@ -7,7 +7,7 @@ const generatePharmBill = (req, res)=>{
     details.date = new Date().toISOString()
     const bill = new PharmBillModel(details)
     details.medicineTray.map((each, i)=>{
-        MedicineModel.findById({_id: each._id}, (err, result)=>{
+        MedicineModel.findById({_id: each.drug_id}, (err, result)=>{
             if(err){
                 throw err
             }else{
