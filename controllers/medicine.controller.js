@@ -23,7 +23,7 @@ const addMedicine=(request,response)=>{
 const allMedicine=(request,response)=>{
   MedicineModel.find( (err,result)=>{
     if(!err){
-      response.send({status:true,drugs:result})
+      response.send({status:true, drugs:result})
     }else{
       response.send({status:false,message:'Internal server error'})
     }
