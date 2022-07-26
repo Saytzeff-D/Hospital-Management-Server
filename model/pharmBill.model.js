@@ -4,7 +4,7 @@ const pharmacyBillSchema = mongoose.Schema({
     billNo: String,
     healthId: String,
     illness: String,
-    date: String,
+    created: String,
     doctorName: String,
     prescriptionId: String,
     medicineTray: Array,
