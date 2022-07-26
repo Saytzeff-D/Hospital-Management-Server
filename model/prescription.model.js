@@ -6,7 +6,8 @@ const prescriptionSchema = mongoose.Schema({
     patientName: String,
     doctorName: String,
     illness: String,
-    prescribedMedicine: Array
+    prescribedMedicine: Array,
+    billStatus: { default: false }
 })
 
 const PrescriptionModel = mongoose.model('prescription_tbs', prescriptionSchema)
