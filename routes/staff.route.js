@@ -4,7 +4,7 @@ const { registerStaff, login, allstaffs, authenticateStaff, getDashboardInfo, ge
 const { addMedicine,allMedicine,updateDrug,delMedicine } = require("../controllers/medicine.controller");
 const { addBirth, fetchAllBirth, addToMortality, fetchAllMortality } = require("../controllers/records.controller");
 const { addPresc, fetchAllPresc } = require("../controllers/prescription.controller");
-const { generatePharmBill, allPharmacyBill } = require("../controllers/bills.controller");
+const { generatePharmBill, allPharmacyBill } = require("../controllers/pharmBills.controller");
 
 staffRouter.post('/register', registerStaff);
 staffRouter.post("/login", login);
