@@ -11,7 +11,7 @@ const generatePharmBill = (req, res)=>{
     details.medicineTray.map((each, i)=>{
         MedicineModel.findById(each.drug_id, (err, result)=>{
             if(err){
-                // throw err
+                res.status(300).json({message: 'Drug not in Pharmacy'})
             }else{
                 if (result == null) {
                     res.status(300).json({message: `${each.medicineName} typed category could not be found in Pharmacy`})
@@ -32,7 +32,7 @@ const generatePharmBill = (req, res)=>{
         }else{
             PrescriptionModel.findOneAndUpdate({prescriptionId: details.prescriptionId}, {billStatus: true}, {upsert: true}, (err, result)=>{
                 if(err){
-                    throw err
+                    res.status(300).json({message: 'Prescription not found'})
                 }else{
                     res.status(200).json({message: 'Success'})
                 }
