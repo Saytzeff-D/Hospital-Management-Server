@@ -9,7 +9,7 @@ const pharmacyBillSchema = mongoose.Schema({
     prescriptionId: String,
     medicineTray: Array,
     amount: String,
-    paidAmount: { default: 0.00 },
+    paidAmount: { default: 0.00, type: String },
     paymentStatus: { default: false }
 })
 
