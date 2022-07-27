@@ -10,8 +10,8 @@ const appointmentSchema = mongoose.Schema({
     timeSlot: String,
     appointmentPriority: String,
     message: String,
-    approvalStatus:{type:Boolean, default:false},
-    paymentStatus: {type: Boolean, default: false}
+    paymentStatus: {type: Boolean, default: false},
+    prescriptionStatus: {type: Boolean, default: false}
 })
 
 const AppointmentModel = mongoose.model('appointment_tbs', appointmentSchema)

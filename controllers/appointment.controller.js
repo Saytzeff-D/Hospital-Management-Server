@@ -29,7 +29,7 @@ const fetchAppointments=(request,response)=>{
 const payAppointmentBill = (req, res)=>{
     let details = req.body
     console.log(details.appointment)
-    AppointmentModel.findByIdAndUpdate(details.appointment.appointmentNo, {paymentStatus: true, approvalStatus: true}, (err, result)=>{
+    AppointmentModel.findByIdAndUpdate(details.appointment.appointmentNo, {paymentStatus: true}, (err, result)=>{
         console.log(err)
         if (err) {
             res.status(300).json({message: 'Server Error'})            
