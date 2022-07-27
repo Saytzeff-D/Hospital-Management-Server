@@ -83,27 +83,20 @@ const allstaffs=(request,response)=>{
     response.send(staffs)  
   })
 }
-const totalIncome = ()=>{
-  let total = 0
-  PaymentModel.find((err, result)=>{
-    result.map((each)=>{
-      total = parseInt(each.amount) + total
-      return total
-    })
-  })
-}
 
 const getDashboardInfo=(request,response)=>{
   let patsNum=0
-  let income = totalIncome()
   StaffModel.find( (err,staffArr)=>{
     PatientModel.find( (err,pats)=>{
       AppointmentModel.find((err,appointments)=>{        
         PharmBillModel.find((err, pharmBillArr)=>{
-          patsNum = pats.length
-          appointments = appointments.length
-          pharmNum = pharmBillArr.length
-          response.send({status:true,staffArr,patsNum,appointments, pharmNum, income})
+          PaymentModel.find((err, payments)=>{
+            patsNum = pats.length
+            appointments = appointments.length
+            pharmNum = pharmBillArr.length
+            response.send({status:true,staffArr,patsNum,appointments, pharmNum,payments})
+            })
+
         })
       })
     })

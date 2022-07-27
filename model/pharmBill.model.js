@@ -10,7 +10,7 @@ const pharmacyBillSchema = mongoose.Schema({
     medicineTray: Array,
     amount: String,
     paidAmount: { default: 0.00, type: String },
-    paymentStatus: { default: false }
+    paymentStatus: {type:Boolean,default: false }
 })
 
 const PharmBillModel = mongoose.model('pharmBillRecords_tbs', pharmacyBillSchema)
