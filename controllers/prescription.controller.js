@@ -7,7 +7,7 @@ const addPresc=(request,response)=>{
     let form = new PrescriptionModel(request.body)
     form.save(err=>{
       if(!err){
-        AppointmentModel.findOneAndUpdate({appointmentNo: details.appointmentNo}, {prescriptionStatus}, (err, result)=>{
+        AppointmentModel.findOneAndUpdate({appointmentNo: details.appointmentNo}, {prescriptionStatus: true}, (err, result)=>{
           if(!err){
             response.send({status:true, message:'Prescription Sent.'})
           }else{
