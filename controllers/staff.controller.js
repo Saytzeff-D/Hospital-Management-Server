@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const PatientModel = require("../model/patient.model")
 const AppointmentModel = require("../model/appointment.model")
+const PharmBillModel = require("../model/pharmBill.model")
+const PaymentModel = require("../model/payment.model")
 
 const registerStaff=(request,response)=>{
 let staffDetails=request.body
@@ -78,19 +80,31 @@ const authenticateStaff=(request,response)=>{
 
 const allstaffs=(request,response)=>{
   StaffModel.find( (err,staffs)=>{
-    response.send(staffs)
-  
-})
+    response.send(staffs)  
+  })
+}
+const totalIncome = ()=>{
+  let total = 0
+  PaymentModel.find((err, result)=>{
+    result.map((each)=>{
+      total = parseInt(each.amount) + total
+      return total
+    })
+  })
 }
 
 const getDashboardInfo=(request,response)=>{
   let patsNum=0
+  let income = totalIncome()
   StaffModel.find( (err,staffArr)=>{
     PatientModel.find( (err,pats)=>{
       AppointmentModel.find((err,appointments)=>{        
-      patsNum=pats.length
-      appointments=appointments.length
-      response.send({status:true,staffArr,patsNum,appointments})
+        PharmBillModel.find((err, pharmBillArr)=>{
+          patsNum = pats.length
+          appointments = appointments.length
+          pharmNum = pharmBillArr.length
+          response.send({status:true,staffArr,patsNum,appointments, pharmNum, income})
+        })
       })
     })
 })   
