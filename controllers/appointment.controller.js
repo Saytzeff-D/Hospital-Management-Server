@@ -81,6 +81,13 @@ const allAppointments=(request,response)=>{
       })
   }
 
+  const delAppointment = (req, res)=>{
+    AppointmentModel.findByIdAndDelete(req._id, (err)=>{
+      if(!err){
+        res.send({status: true})
+      }else res.send({status: false})
+    })
+  }
   const getPatInfo=(request,response)=>{
     let healthId=request.body.healthId
     AppointmentModel.find({healthId:healthId}, (err,Apps)=>{
@@ -99,5 +106,5 @@ const allAppointments=(request,response)=>{
 
   }
 
-let appointmentFunc = { addAppointment,getPatInfo, fetchAppointments, payAppointmentBill, allAppointments, checkAppointment, updateAppointment }
+let appointmentFunc = { addAppointment,getPatInfo, fetchAppointments, payAppointmentBill, allAppointments, checkAppointment, updateAppointment, delAppointment }
 module.exports = appointmentFunc
