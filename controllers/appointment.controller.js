@@ -82,7 +82,7 @@ const allAppointments=(request,response)=>{
   }
 
   const delAppointment = (req, res)=>{
-    AppointmentModel.findByIdAndDelete(req._id, (err)=>{
+    AppointmentModel.findByIdAndDelete(req.body._id, (err)=>{
       if(!err){
         res.send({status: true})
       }else res.send({status: false})
