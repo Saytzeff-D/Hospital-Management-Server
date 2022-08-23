@@ -18,6 +18,6 @@ patientRouter.post('/payAppointment', payAppointmentBill)
 patientRouter.post('/getInfo', getPatInfo)
 patientRouter.post('/pharmacyBills', patientPharmBillRecord)
 patientRouter.post('/payPharmBill', payPharmacyBill)
-patientRouter.post('/delAppoint', delAppointment)
+patientRouter.delete('/delAppoint', delAppointment)
 
 module.exports = patientRouter
