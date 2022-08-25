@@ -2,6 +2,7 @@ const PatientModel = require("../model/patient.model")
 const jwt = require('jsonwebtoken')
 
 const { transporter, mailOptions } = require("./mail.controller")
+const NatalityModel = require("../model/natalityRecord.model.")
 
 const getLandingPage=(req,res)=>{
     res.send('Hello Patient')
@@ -10,6 +11,10 @@ const registerPatient=(req,res)=>{
     const patientDetails= req.body
     const generateHealthId = `PAT${Math.floor(Math.random()*10000)}`
     patientDetails.healthId = generateHealthId
+    if(!patientDetails.email){
+        patientDetails.email=generateHealthId
+        console.log('no eamil')
+    }   
     PatientModel.findOne({email: req.body.email}, (err, result)=>{
         if (err) {
             res.status(300).json({message: 'Server Error'})
@@ -23,7 +28,11 @@ const registerPatient=(req,res)=>{
                     console.log(err)
                     res.status(501).send({status:false, message:'Internal server error'})
                 }else{
-                    res.status(200).json({message: 'Success', healthId: generateHealthId})
+                    if(patientDetails.exporting){
+                        console.log('exporting fucrion')
+                        exported(patientDetails._id,res)
+                    }
+                    res.status(200).json({message: 'Success', healthId: generateHealthId,status:true})
                 }
                 })
             }
@@ -114,6 +123,15 @@ const updatePat=(request,response)=>{
             response.send({status:false,message:'server error, try again'})
         }else{
             response.send({status:true,message:'operation successful'})
+        }
+    })
+
+}
+const exported=(id,response)=>{
+    NatalityModel.findByIdAndUpdate(id, {exported:true}, (err)=>{
+        if(err){
+            console.log('cannot edit exported')
+            response.send({status:false,message:'server error, try again'})
         }
     })
 

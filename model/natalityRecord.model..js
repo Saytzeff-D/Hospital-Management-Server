@@ -9,7 +9,8 @@ const birthSchema= mongoose.Schema({
     motherHealthId:String,
     motherName:String,
     fatherName:String,
-    report:String
+    report:String,
+    exported:{default:false}
 })
 const NatalityModel = mongoose.model('natality_tb',birthSchema)
 module.exports = NatalityModel

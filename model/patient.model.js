@@ -14,15 +14,15 @@ let patientSchema= mongoose.Schema({
    fullName:{type:String,require:true},
    guardianName:{type:String,require:false},
    bloodGroup:{type:String,require:false},
-   email:{type:String,require:true},
-   phone:{type:String,require:true},
+   email:{type:String,require:false},
+   phone:{type:String,require:false},
    disability:{type:String,require:true},
    gender:{type:String,require:true},
-   address:{type:String,require:true},
+   address:{type:String,require:false},
    dob:{type:String,require:true},
-   maritalStatus:{type:String,require:true},
+   maritalStatus:{type:String,require:false},
    created:String,
-   photo:{type:String,require:true},
+   photo:{type:String,require:false},
    healthId: String,
    weight:{type:String,default:'NA'},
    height:{type:String, default:'NA'},
@@ -33,6 +33,10 @@ let patientSchema= mongoose.Schema({
 
 patientSchema.pre('save', function(next){
    const file = this.photo
+   if(!this.photo){
+    console.log('no photo')
+    next()
+   }
    cloudinary.v2.uploader.upload(file, {public_id: this.fullName}, (err,result)=>{
     if(err){
     console.log('Failed to upload')
