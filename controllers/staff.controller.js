@@ -112,5 +112,13 @@ const getPatDetails=(request,response)=>{
     }
   })
 }
+const deleteStaff = (req, res)=>{
+  console.log(req.body)
+  StaffModel.findByIdAndDelete(req.body.id, (err)=>{
+    if(!err){
+      res.json({status: true})
+    }else res.status(300).json({status: true})
+  })
+}
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails, deleteStaff }
