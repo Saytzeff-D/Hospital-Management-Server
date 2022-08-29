@@ -1,5 +1,14 @@
 const PatientModel = require("../model/patient.model")
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary')
+
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY, 
+    api_secret: process.env.API_SECRET
+});
+
 
 const { transporter, mailOptions } = require("./mail.controller")
 const NatalityModel = require("../model/natalityRecord.model.")
@@ -134,8 +143,35 @@ const exported=(id,response)=>{
             response.send({status:false,message:'server error, try again'})
         }
     })
+}
 
+const updatePhoto=(request,response)=>{
+    let obj=request.body
+    console.log('uploading')
+    console.log(obj)
+    cloudinary.v2.uploader.upload(obj.image, {public_id: obj.fullName}, (err,result)=>{
+        if(err){
+        console.log(err)
+        response.status(501).send({status:false, message:'something went wrong'})
+        }else{
+        let imageUrl = result.secure_url
+        let splitting = imageUrl.split('upload')        
+        let path = splitting[0]+'upload'
+        let newImagepath =`${path}/${'w_250,c_scale'}/${obj.fullName}`
+        
+        PatientModel.findByIdAndUpdate(obj._id, {photo:newImagepath}, (err)=>{
+            if(err){
+                console.log('cannot edit exported')
+                response.send({status:false,message:'server error, try again'})
+            }else{
+                console.log('updated')
+                response.send({status:true})
+            }
+        })
+
+        }
+    }); 
 }
 
 
-module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allPatient, authenticatePatient,deletePat }
+module.exports={ getLandingPage,registerPatient,updatePat, retrievePatientId, login,allPatient, authenticatePatient,deletePat,updatePhoto }

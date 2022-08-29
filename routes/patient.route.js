@@ -1,7 +1,7 @@
 const express = require('express');
 const { addAppointment, fetchAppointments, payAppointmentBill, getPatInfo, delAppointment } = require('../controllers/appointment.controller');
 const { patientPharmBillRecord, payPharmacyBill } = require('../controllers/pharmBills.controller');
-const { authenticatePatient, allPatient, retrievePatientId, updatePat, deletePat, login, registerPatient } = require('../controllers/patient.controller');
+const { authenticatePatient, allPatient, retrievePatientId, updatePat, deletePat, login, registerPatient,updatePhoto } = require('../controllers/patient.controller');
 const patientRouter = express.Router()
 
 
@@ -19,5 +19,7 @@ patientRouter.post('/getInfo', getPatInfo)
 patientRouter.post('/pharmacyBills', patientPharmBillRecord)
 patientRouter.post('/payPharmBill', payPharmacyBill)
 patientRouter.delete('/delAppoint', delAppointment)
+patientRouter.post('/updatePhoto', updatePhoto)
+
 
 module.exports = patientRouter
