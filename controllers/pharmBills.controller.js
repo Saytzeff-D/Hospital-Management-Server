@@ -67,7 +67,7 @@ const payPharmacyBill = (req, res)=>{
         if(err){
             throw err
         }else{
-            PharmBillModel.findByIdAndUpdate(details.billId, {paymentStatus: true}, (err, resp)=>{
+            PharmBillModel.findByIdAndUpdate(details.billId, {paymentStatus: true, paidAmount: parseInt(details.amount)/100}, (err, resp)=>{
                 if (err) {
                     res.status(300).json({message: 'Unable to update'})
                 } else {
