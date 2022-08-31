@@ -148,10 +148,8 @@ const exported=(id,response)=>{
 const updatePhoto=(request,response)=>{
     let obj=request.body
     console.log('uploading')
-    console.log(obj)
     cloudinary.v2.uploader.upload(obj.image, {public_id: obj.fullName}, (err,result)=>{
         if(err){
-        console.log(err)
         response.status(501).send({status:false, message:'something went wrong'})
         }else{
         let imageUrl = result.secure_url
@@ -161,10 +159,8 @@ const updatePhoto=(request,response)=>{
         
         PatientModel.findByIdAndUpdate(obj._id, {photo:newImagepath}, (err)=>{
             if(err){
-                console.log('cannot edit exported')
                 response.send({status:false,message:'server error, try again'})
             }else{
-                console.log('updated')
                 response.send({status:true})
             }
         })

@@ -1,5 +1,7 @@
 const AppointmentModel = require("../model/appointment.model")
+const PatientModel = require("../model/patient.model")
 const PaymentModel = require("../model/payment.model")
+const PharmBillModel = require("../model/pharmBill.model")
 const PrescriptionModel = require("../model/prescription.model")
 
 const addAppointment=(request,response)=>{
@@ -92,12 +94,14 @@ const allAppointments=(request,response)=>{
     let healthId=request.body.healthId
     AppointmentModel.find({healthId:healthId}, (err,Apps)=>{
       if(!err){
-        PrescriptionModel.find({healthId:healthId}, (errs,Pres)=>{
-          if(!err){            
-            response.send({status:true,AppNo:Apps.length,presNo:Pres.length})
-          }else{
-          response.send({status:false})
-          }
+        PharmBillModel.find({healthId:healthId}, (errs,Pres)=>{
+          PatientModel.find( (err,AllPats)=>{
+            if(!err){
+              response.send({status:true,AppNo:Apps.length,presNo:Pres.length,patNo:AllPats.length})
+            }else{
+              response.send({status:false})
+            }
+          })
         })
       }else{
         response.send({status:false})
