@@ -62,6 +62,7 @@ const payPharmacyBill = (req, res)=>{
     const details = req.body
     details.created = new Date().toISOString()
     let pay = new PaymentModel(details)
+    console.log(details._id)
     pay.save((err)=>{
         if(err){
             throw err
