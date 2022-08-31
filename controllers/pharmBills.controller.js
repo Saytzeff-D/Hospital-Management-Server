@@ -61,17 +61,18 @@ const allPharmacyBill = (req, res)=>{
 const payPharmacyBill = (req, res)=>{
     const details = req.body
     details.created = new Date().toISOString()
+    console.log(details)
     let pay = new PaymentModel(details)
     console.log(details._id)
     pay.save((err)=>{
         if(err){
             throw err
         }else{
-            PharmBillModel.findByIdAndUpdate(details._id, {paymentStatus: true}, (err)=>{
+            PharmBillModel.findByIdAndUpdate(details.billId, {paymentStatus: true, paidAmount: parseInt(details.amount)/100}, (err, resp)=>{
                 if (err) {
                     res.status(300).json({message: 'Unable to update'})
                 } else {
-                    res.status(200).json({message: 'Success'})
+                    res.status(200).json({message: 'Success', resp})
                 }
             })
         }
