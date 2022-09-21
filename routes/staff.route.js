@@ -28,6 +28,6 @@ staffRouter.get('/allPrescription', fetchAllPresc)
 staffRouter.post('/createPharmBill', generatePharmBill)
 staffRouter.get('/pharmacyBills', allPharmacyBill)
 staffRouter.delete('/delete', deleteStaff)
-staffRouter.get('/finances', allFinances)
+staffRouter.get('/finance', allFinances)
 
 module.exports = staffRouter
