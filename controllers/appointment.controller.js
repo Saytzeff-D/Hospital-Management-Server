@@ -37,6 +37,7 @@ const payAppointmentBill = (req, res)=>{
             res.status(300).json({message: 'Server Error'})            
         } else {
             console.log(result)
+            details.payment.created = new Date()
             let form = PaymentModel(details.payment)
             form.save((err)=>{
                 if(!err){
