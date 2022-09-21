@@ -121,9 +121,9 @@ const deleteStaff = (req, res)=>{
   })
 }
 const allFinances = (req, res)=>{
-  PaymentModel.find((err, finances)=>{
+  PaymentModel.find((err, finance)=>{
     if(!err){
-      res.json(finances)
+      res.json({status: true, finance})
     }else{
       res.status(300).json('Internal Server Error');
     }
