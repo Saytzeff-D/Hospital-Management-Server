@@ -120,7 +120,7 @@ const deleteStaff = (req, res)=>{
     }else res.status(300).json({status: true})
   })
 }
-const allFinance = (req, res)=>{
+const allFinances = (req, res)=>{
   PaymentModel.find((err, finances)=>{
     if(!err){
       res.json(finances)
@@ -130,4 +130,4 @@ const allFinance = (req, res)=>{
   })
 }
 
-module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails, deleteStaff }
+module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails, deleteStaff, allFinances }
