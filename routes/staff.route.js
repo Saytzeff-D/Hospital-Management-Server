@@ -1,6 +1,6 @@
 const staffRouter = require("express").Router();
 const { allAppointments, checkAppointment, updateAppointment } = require("../controllers/appointment.controller");
-const { registerStaff, login, allstaffs, authenticateStaff, getDashboardInfo, getPatDetails, deleteStaff } = require('../controllers/staff.controller')
+const { registerStaff, login, allstaffs, authenticateStaff, getDashboardInfo, getPatDetails, deleteStaff, allFinances } = require('../controllers/staff.controller')
 const { addMedicine,allMedicine,updateDrug,delMedicine } = require("../controllers/medicine.controller");
 const { addBirth, fetchAllBirth, addToMortality, fetchAllMortality } = require("../controllers/records.controller");
 const { addPresc, fetchAllPresc } = require("../controllers/prescription.controller");
@@ -28,5 +28,6 @@ staffRouter.get('/allPrescription', fetchAllPresc)
 staffRouter.post('/createPharmBill', generatePharmBill)
 staffRouter.get('/pharmacyBills', allPharmacyBill)
 staffRouter.delete('/delete', deleteStaff)
+staffRouter.get('/finances', allFinances)
 
 module.exports = staffRouter

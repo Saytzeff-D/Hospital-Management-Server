@@ -120,5 +120,14 @@ const deleteStaff = (req, res)=>{
     }else res.status(300).json({status: true})
   })
 }
+const allFinance = (req, res)=>{
+  PaymentModel.find((err, finances)=>{
+    if(!err){
+      res.json(finances)
+    }else{
+      res.status(300).json('Internal Server Error');
+    }
+  })
+}
 
 module.exports = { login,registerStaff,allstaffs,authenticateStaff,getDashboardInfo,getPatDetails, deleteStaff }
